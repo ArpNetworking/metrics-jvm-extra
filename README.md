@@ -17,8 +17,8 @@ Jvm Extra
 A runnable to collect the various JVM metrics.
 
 
-Instrumenting Your Application
-------------------------------
+Instrumenting Your JVM Application
+----------------------------------
 
 ### Add Dependency
 
@@ -217,11 +217,12 @@ Prerequisites:
 * [Maven 3.2.5+](http://maven.apache.org/download.cgi)
 
 Building:
-    metrics-jvm-extra> mvn verify
+
+    metrics-jvm-extra> ./mvnw verify
 
 To use the local version you must first install it locally:
 
-    metrics-jvm-extra> mvn install
+    metrics-jvm-extra> ./mvnw install
 
 You can determine the version of the local build from the pom file.  Using the local version is intended only for testing or development.
 
