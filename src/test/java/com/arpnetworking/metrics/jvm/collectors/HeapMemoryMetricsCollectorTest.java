@@ -16,7 +16,7 @@
 package com.arpnetworking.metrics.jvm.collectors;
 
 import com.arpnetworking.metrics.Metrics;
-import com.arpnetworking.metrics.Unit;
+import com.arpnetworking.metrics.Units;
 import com.arpnetworking.metrics.jvm.ManagementFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -56,8 +56,8 @@ public final class HeapMemoryMetricsCollectorTest {
         createMockBean(_memoryUsage, 10L, 100L);
         Mockito.when(_memoryMXBean.getHeapMemoryUsage()).thenReturn(_memoryUsage);
         HeapMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
-        Mockito.verify(_metrics).setGauge("jvm/heap_memory/used", 10L, Unit.BYTE);
-        Mockito.verify(_metrics).setGauge("jvm/heap_memory/max", 100L, Unit.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/heap_memory/used", 10L, Units.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/heap_memory/max", 100L, Units.BYTE);
     }
 
     @Test
@@ -65,8 +65,8 @@ public final class HeapMemoryMetricsCollectorTest {
         createMockBean(_memoryUsage, 10L, -1);
         Mockito.when(_memoryMXBean.getHeapMemoryUsage()).thenReturn(_memoryUsage);
         HeapMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
-        Mockito.verify(_metrics).setGauge("jvm/heap_memory/used", 10L, Unit.BYTE);
-        Mockito.verify(_metrics, Mockito.never()).setGauge(Matchers.eq("jvm/heap_memory/max"), Mockito.anyLong(), Matchers.eq(Unit.BYTE));
+        Mockito.verify(_metrics).setGauge("jvm/heap_memory/used", 10L, Units.BYTE);
+        Mockito.verify(_metrics, Mockito.never()).setGauge(Matchers.eq("jvm/heap_memory/max"), Mockito.anyLong(), Matchers.eq(Units.BYTE));
     }
 
     @Test(expected = Exception.class)

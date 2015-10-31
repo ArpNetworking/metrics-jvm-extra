@@ -16,7 +16,7 @@
 package com.arpnetworking.metrics.jvm.collectors;
 
 import com.arpnetworking.metrics.Metrics;
-import com.arpnetworking.metrics.Unit;
+import com.arpnetworking.metrics.Units;
 import com.arpnetworking.metrics.jvm.ManagementFactory;
 
 import java.lang.management.MemoryPoolMXBean;
@@ -57,7 +57,7 @@ public class NonHeapMemoryMetricsCollector implements JvmMetricsCollector {
                             MetricsUtil.convertToSnakeCase(pool.getName()),
                             MEMORY_USED),
                     usage.getUsed(),
-                    Unit.BYTE
+                    Units.BYTE
             );
             final long memoryMax = usage.getMax();
             if (memoryMax != -1) {
@@ -69,7 +69,7 @@ public class NonHeapMemoryMetricsCollector implements JvmMetricsCollector {
                                 MetricsUtil.convertToSnakeCase(pool.getName()),
                                 MEMORY_MAX),
                         memoryMax,
-                        Unit.BYTE
+                        Units.BYTE
                 );
             }
         }
