@@ -16,7 +16,7 @@
 package com.arpnetworking.metrics.jvm.collectors;
 
 import com.arpnetworking.metrics.Metrics;
-import com.arpnetworking.metrics.Unit;
+import com.arpnetworking.metrics.Units;
 import com.arpnetworking.metrics.jvm.ManagementFactory;
 
 import java.lang.management.GarbageCollectorMXBean;
@@ -89,7 +89,7 @@ public class GarbageCollectionMetricsCollector implements JvmMetricsCollector {
                                 MetricsUtil.convertToSnakeCase(beanName),
                                 COLLECTION_TIME),
                         collectionTime,
-                        Unit.MILLISECOND
+                        Units.MILLISECOND
                 );
             }
         }

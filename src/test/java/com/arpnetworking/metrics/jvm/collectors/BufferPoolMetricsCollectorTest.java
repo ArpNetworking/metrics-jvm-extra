@@ -16,7 +16,7 @@
 package com.arpnetworking.metrics.jvm.collectors;
 
 import com.arpnetworking.metrics.Metrics;
-import com.arpnetworking.metrics.Unit;
+import com.arpnetworking.metrics.Units;
 import com.arpnetworking.metrics.jvm.ManagementFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -61,11 +61,11 @@ public final class BufferPoolMetricsCollectorTest {
     @Test
     public void testCollectWithSingleBeans() {
         createMockBean(_bufferPoolMXBean1, "My Bean 1", 2L, 10L, 100L);
-        Mockito.doReturn(Arrays.asList(_bufferPoolMXBean1)).when(_managementFactory).getBufferPoolMXBeans();
+        Mockito.doReturn(Collections.singletonList(_bufferPoolMXBean1)).when(_managementFactory).getBufferPoolMXBeans();
         BufferPoolMetricsCollector.newInstance().collect(_metrics, _managementFactory);
         Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/count", 2L);
-        Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/total_capacity", 10L, Unit.BYTE);
-        Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/memory_used", 100L, Unit.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/total_capacity", 10L, Units.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/memory_used", 100L, Units.BYTE);
     }
 
     @Test
@@ -77,11 +77,11 @@ public final class BufferPoolMetricsCollectorTest {
                 .getBufferPoolMXBeans();
         BufferPoolMetricsCollector.newInstance().collect(_metrics, _managementFactory);
         Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/count", 2L);
-        Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/total_capacity", 10L, Unit.BYTE);
-        Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/memory_used", 100L, Unit.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/total_capacity", 10L, Units.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/memory_used", 100L, Units.BYTE);
         Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_2/count", 3L);
-        Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_2/total_capacity", 30L, Unit.BYTE);
-        Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_2/memory_used", 400L, Unit.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_2/total_capacity", 30L, Units.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_2/memory_used", 400L, Units.BYTE);
     }
 
     @Test(expected = Exception.class)
@@ -125,12 +125,12 @@ public final class BufferPoolMetricsCollectorTest {
     @Test
     public void testCollectWithUndefinedMax() {
         createMockBean(_bufferPoolMXBean1, "My Bean 1", 2L, 10L, -1);
-        Mockito.doReturn(Arrays.asList(_bufferPoolMXBean1)).when(_managementFactory).getBufferPoolMXBeans();
+        Mockito.doReturn(Collections.singletonList(_bufferPoolMXBean1)).when(_managementFactory).getBufferPoolMXBeans();
         BufferPoolMetricsCollector.newInstance().collect(_metrics, _managementFactory);
         Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/count", 2L);
-        Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/total_capacity", 10L, Unit.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/total_capacity", 10L, Units.BYTE);
         Mockito.verify(_metrics, Mockito.never())
-                .setGauge(Matchers.eq("jvm/buffer_pool/my_bean_1/memory_used"), Matchers.anyLong(), Matchers.eq(Unit.BYTE));
+                .setGauge(Matchers.eq("jvm/buffer_pool/my_bean_1/memory_used"), Matchers.anyLong(), Matchers.eq(Units.BYTE));
     }
 
     private void createMockBean(
