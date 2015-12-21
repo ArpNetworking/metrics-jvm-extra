@@ -27,7 +27,7 @@
   <artifactId>jvm-extra</artifactId>
   <packaging>jar</packaging>
   <name>Jvm Extra</name>
-  <description />
+  <description>Extension to metrics-java-client for collecting JVM metrics.</description>
   <version>0.4.3-SNAPSHOT</version>
 
   <licenses>
@@ -89,7 +89,6 @@
     <jacoco.check.branch.coverage>1.0</jacoco.check.branch.coverage>
   </properties>
   <build>
-    <finalName>${project.artifactId}</finalName>
     <plugins>
       <!-- Enable Inherited Plugins -->
       <plugin>
