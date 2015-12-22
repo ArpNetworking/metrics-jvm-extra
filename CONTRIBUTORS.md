@@ -1,7 +1,7 @@
 Contributors
 ============
 
-The following people have made source contributions to the metrics client java project:
+The following people have made source contributions to the metrics jvm extra project:
 
 * Brandon Arp (barp at groupon dot com)
 * Deepika Misra (deepika at groupon dot com)
