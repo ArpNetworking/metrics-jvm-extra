@@ -1,5 +1,5 @@
 Jvm Extra
-===========
+=========
 
 <a href="https://raw.githubusercontent.com/ArpNetworking/metrics-jvm-extra/master/LICENSE">
     <img src="https://img.shields.io/hexpm/l/plug.svg"
