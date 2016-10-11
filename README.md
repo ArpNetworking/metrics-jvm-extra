@@ -6,7 +6,7 @@ Jvm Extra
          alt="License: Apache 2">
 </a>
 <a href="https://travis-ci.org/ArpNetworking/metrics-jvm-extra/">
-    <img src="https://travis-ci.org/ArpNetworking/metrics-jvm-extra.png"
+    <img src="https://travis-ci.org/ArpNetworking/metrics-jvm-extra.png?branch=master"
          alt="Travis Build">
 </a>
 <a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.arpnetworking.metrics.extras%22%20a%3A%22jvm-extra%22">
