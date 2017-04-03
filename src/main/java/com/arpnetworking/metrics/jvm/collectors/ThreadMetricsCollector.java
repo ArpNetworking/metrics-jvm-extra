@@ -37,9 +37,6 @@ public class ThreadMetricsCollector implements JvmMetricsCollector {
         return new ThreadMetricsCollector();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void collect(final Metrics metrics, final ManagementFactory managementFactory) {
         final ThreadMXBean threadBean = managementFactory.getThreadMXBean();

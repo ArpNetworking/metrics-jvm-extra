@@ -45,9 +45,6 @@ import java.util.List;
 public class JvmMetricsRunnable implements Runnable {
 // CHECKSTYLE.ON: FinalClass
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void run() {
         Metrics metrics = null;
@@ -405,49 +402,31 @@ public class JvmMetricsRunnable implements Runnable {
             return new ManagementFactoryDefault();
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public List<GarbageCollectorMXBean> getGarbageCollectorMXBeans() {
             return java.lang.management.ManagementFactory.getGarbageCollectorMXBeans();
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public MemoryMXBean getMemoryMXBean() {
             return java.lang.management.ManagementFactory.getMemoryMXBean();
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public List<MemoryPoolMXBean> getMemoryPoolMXBeans() {
             return java.lang.management.ManagementFactory.getMemoryPoolMXBeans();
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public ThreadMXBean getThreadMXBean() {
             return java.lang.management.ManagementFactory.getThreadMXBean();
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public List<BufferPoolMXBean> getBufferPoolMXBeans() {
             return java.lang.management.ManagementFactory.getPlatformMXBeans(BufferPoolMXBean.class);
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public OperatingSystemMXBean getOperatingSystemMXBean() {
             return java.lang.management.ManagementFactory.getOperatingSystemMXBean();
