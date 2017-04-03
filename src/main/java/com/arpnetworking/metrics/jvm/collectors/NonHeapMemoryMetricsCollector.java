@@ -41,9 +41,6 @@ public class NonHeapMemoryMetricsCollector implements JvmMetricsCollector {
         return new NonHeapMemoryMetricsCollector();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void collect(final Metrics metrics, final ManagementFactory managementFactory) {
         final List<MemoryPoolMXBean> memoryPoolBeans = managementFactory.getMemoryPoolMXBeans();

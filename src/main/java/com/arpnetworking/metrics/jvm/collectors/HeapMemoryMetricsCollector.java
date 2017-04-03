@@ -38,9 +38,6 @@ public class HeapMemoryMetricsCollector implements JvmMetricsCollector {
         return new HeapMemoryMetricsCollector();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void collect(final Metrics metrics, final ManagementFactory managementFactory) {
         final MemoryUsage heapUsage = managementFactory.getMemoryMXBean().getHeapMemoryUsage();

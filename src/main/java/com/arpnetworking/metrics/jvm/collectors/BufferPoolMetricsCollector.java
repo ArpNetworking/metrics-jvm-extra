@@ -40,9 +40,6 @@ public class BufferPoolMetricsCollector implements JvmMetricsCollector{
         return new BufferPoolMetricsCollector();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void collect(final Metrics metrics, final ManagementFactory managementFactory) {
         final List<BufferPoolMXBean> bufferPoolBeans = managementFactory.getBufferPoolMXBeans();

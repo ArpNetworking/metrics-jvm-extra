@@ -43,9 +43,6 @@ public class GarbageCollectionMetricsCollector implements JvmMetricsCollector {
         return new GarbageCollectionMetricsCollector();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void collect(final Metrics metrics, final ManagementFactory managementFactory) {
         final List<GarbageCollectorMXBean> gcBeans = managementFactory.getGarbageCollectorMXBeans();

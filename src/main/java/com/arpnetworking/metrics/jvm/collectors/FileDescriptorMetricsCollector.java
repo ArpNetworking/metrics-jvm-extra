@@ -39,9 +39,6 @@ public class FileDescriptorMetricsCollector implements JvmMetricsCollector {
         return new FileDescriptorMetricsCollector();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void collect(final Metrics metrics, final ManagementFactory managementFactory) {
         final OperatingSystemMXBean bean = managementFactory.getOperatingSystemMXBean();
