@@ -37,59 +37,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An implementation of <code>Runnable</code> that collects all JVM metrics each time its run.
+ * An implementation of <code>Runnable</code> that collects all JVM metrics
+ * each time its run.
  *
  * @author Deepika Misra (deepika at groupon dot com)
  */
 // CHECKSTYLE.OFF: FinalClass - Allow clients to inherit from this.
-public class JvmMetricsRunnable implements Runnable {
+public class JvmMetricsRunnable extends AbstractMetricsRunnable {
 // CHECKSTYLE.ON: FinalClass
 
     @Override
-    public void run() {
-        Metrics metrics = null;
-        try {
-            metrics = _metricsFactory.create();
-            for (final JvmMetricsCollector collector : _collectorsEnabled) {
-                collector.collect(metrics, _managementFactory);
-            }
-            // CHECKSTYLE.OFF: IllegalCatch - No checked exceptions here
-        } catch (final Exception e) {
-            // CHECKSTYLE.ON: IllegalCatch
-            handleException(e);
-        } finally {
-            try {
-                metrics.close();
-            // CHECKSTYLE.OFF: IllegalCatch - No checked exceptions here
-            } catch (final Exception e) {
-            // CHECKSTYLE.ON: IllegalCatch
-                handleException(e);
-            }
-        }
-    }
-
-    /**
-     * Handles exceptions based on a boolean flag. If the flag is true, it logs and swallows the exception, else it will
-     * throw.
-     *
-     * @param e An instance of <code>RuntimeException</code>.
-     */
-    protected void handleException(final Exception e) {
-        if (_swallowException) {
-            LOGGER.warn("JVM metrics collection failed.", e);
-        } else {
-            if (e instanceof RuntimeException) {
-                throw (RuntimeException) e;
-            } else {
-                throw new RuntimeException(e);
-            }
+    protected void collectMetrics(final Metrics metrics) {
+        for (final JvmMetricsCollector collector : _collectorsEnabled) {
+            collector.collect(metrics, _managementFactory);
         }
     }
 
     private JvmMetricsRunnable(final Builder builder) {
-        _metricsFactory = builder._metricsFactory;
+        super(builder._metricsFactory, builder._swallowException, LOGGER);
         _managementFactory = builder._managementFactory;
-        _swallowException = builder._swallowException;
         if (builder._collectGarbageCollectionMetrics) {
             _collectorsEnabled.add(builder._garbageCollectionMetricsCollector);
         }
@@ -110,9 +76,7 @@ public class JvmMetricsRunnable implements Runnable {
         }
     }
 
-    private final MetricsFactory _metricsFactory;
     private final ManagementFactory _managementFactory;
-    private final boolean _swallowException;
     private final List<JvmMetricsCollector> _collectorsEnabled = new ArrayList<>();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JvmMetricsRunnable.class);
@@ -192,8 +156,11 @@ public class JvmMetricsRunnable implements Runnable {
         }
 
         /**
-         * Set the flag indicating if any exception caught during the process of metrics collection should be logged and
-         * swallowed. Optional. Defaults to true. True indicates that the exception will be logged and swallowed.
+         * Set the flag indicating if any exception caught during the process
+         * of metrics collection should be logged and swallowed. Optional.
+         * Defaults to true. Cannot be null. True indicates that the exception
+         * will be logged and swallowed false indicates it will be rethrown as
+         * a {@code RuntimeException}.
          *
          * @param value The value for the <code>Boolean</code> instance.
          * @return This <code>Builder</code> instance.
@@ -204,8 +171,9 @@ public class JvmMetricsRunnable implements Runnable {
         }
 
         /**
-         * Set the flag indicating if Heap Memory metrics should be collected. A true value indicates that these
-         * metrics need to be collected. Optional. Defaults to true.
+         * Set the flag indicating if Heap Memory metrics should be collected.
+         * A true value indicates that these metrics need to be collected.
+         * Optional. Defaults to true. Cannot be null.
          *
          * @param value A <code>Boolean</code> value.
          * @return This <code>Builder</code> instance.
@@ -216,8 +184,9 @@ public class JvmMetricsRunnable implements Runnable {
         }
 
         /**
-         * Set the flag indicating if Non-Heap Memory metrics should be collected. A true value indicates that these
-         * metrics need to be collected. Optional. Defaults to true.
+         * Set the flag indicating if Non-Heap Memory metrics should be
+         * collected. A true value indicates that these metrics need to
+         * be collected. Optional. Defaults to true. Cannot be null.
          *
          * @param value A <code>Boolean</code> value.
          * @return This <code>Builder</code> instance.
@@ -229,8 +198,9 @@ public class JvmMetricsRunnable implements Runnable {
 
 
         /**
-         * Set the flag indicating if Thread metrics should be collected. A true value indicates that these metrics
-         * need to be collected. Optional. Defaults to true.
+         * Set the flag indicating if Thread metrics should be collected. A
+         * true value indicates that these metrics need to be collected.
+         * Optional. Defaults to true. Cannot be null.
          *
          * @param value A <code>Boolean</code> value.
          * @return This <code>Builder</code> instance.
@@ -241,8 +211,9 @@ public class JvmMetricsRunnable implements Runnable {
         }
 
         /**
-         * Set the flag indicating if Garbage Collection metrics should be collected. A true value indicates that these
-         * metrics need to be collected. Optional. Defaults to true.
+         * Set the flag indicating if Garbage Collection metrics should be
+         * collected. A true value indicates that these metrics need to be
+         * collected. Optional. Defaults to true. Cannot be null.
          *
          * @param value A <code>Boolean</code> value.
          * @return This <code>Builder</code> instance.
@@ -253,8 +224,9 @@ public class JvmMetricsRunnable implements Runnable {
         }
 
         /**
-         * Set the flag indicating if Buffer Pool metrics should be collected. A true value indicates that these
-         * metrics need to be collected. Optional. Defaults to true.
+         * Set the flag indicating if Buffer Pool metrics should be collected.
+         * A true value indicates that these metrics need to be collected.
+         * Optional. Defaults to true. Cannot be null.
          *
          * @param value A <code>Boolean</code> value.
          * @return This <code>Builder</code> instance.
@@ -265,8 +237,9 @@ public class JvmMetricsRunnable implements Runnable {
         }
 
         /**
-         * Set the flag indicating if File Descriptor metrics should be collected. A true value indicates that these
-         * metrics need to be collected. Optional. Defaults to true.
+         * Set the flag indicating if File Descriptor metrics should be
+         * collected. A true value indicates that these metrics need to be
+         * collected. Optional. Defaults to true. Cannot be null.
          *
          * @param value A <code>Boolean</code> value.
          * @return This <code>Builder</code> instance.
@@ -277,8 +250,10 @@ public class JvmMetricsRunnable implements Runnable {
         }
 
         /**
-         * Set the <code>ManagementFactory</code> instance. Defaults to an instance of
-         * <code>ManagementFactoryDefault</code>. This is for testing purposes only and should never be used by clients.
+         * Set the <code>ManagementFactory</code> instance. Optional. Defaults
+         * to an instance of <code>ManagementFactoryDefault</code>. Cannot be
+         * null. This is for testing purposes only and should never be used by
+         * clients.
          *
          * @param value The value for the <code>ManagementFactory</code> instance.
          * @return This <code>Builder</code> instance.
@@ -289,8 +264,9 @@ public class JvmMetricsRunnable implements Runnable {
         }
 
         /**
-         * Set the <code>HeapMemoryMetricsCollector</code>. Defaults to an instance of
-         * <code>HeapMemoryMetricsCollector</code>. This is for testing purposes only and should never be used by
+         * Set the <code>HeapMemoryMetricsCollector</code>. Defaults to an
+         * instance of <code>HeapMemoryMetricsCollector</code>. Cannot be null.
+         * This is for testing purposes only and should never be used by
          * clients.
          *
          * @param value A <code>HeapMemoryMetricsCollector</code> instance.
@@ -302,8 +278,9 @@ public class JvmMetricsRunnable implements Runnable {
         }
 
         /**
-         * Set the <code>NonHeapMemoryMetricsCollector</code>. Defaults to an instance of
-         * <code>NonHeapMemoryMetricsCollector</code>. This is for testing purposes only and should never be used by
+         * Set the <code>NonHeapMemoryMetricsCollector</code>. Defaults to an
+         * instance of <code>NonHeapMemoryMetricsCollector</code>.  Cannot be
+         * null. This is for testing purposes only and should never be used by
          * clients.
          *
          * @param value A <code>NonHeapMemoryMetricsCollector</code> instance.
@@ -315,8 +292,10 @@ public class JvmMetricsRunnable implements Runnable {
         }
 
         /**
-         * Set the <code>ThreadMetricsCollector</code>. Defaults to an instance of
-         * <code>ThreadMetricsCollector</code>. This is for testing purposes only and should never be used by clients.
+         * Set the <code>ThreadMetricsCollector</code>. Defaults to an
+         * instance of <code>ThreadMetricsCollector</code>.  Cannot be null.
+         * This is for testing purposes only and should never be used by
+         * clients.
          *
          * @param value A <code>ThreadMetricsCollector</code> instance.
          * @return This <code>Builder</code> instance.
@@ -327,9 +306,10 @@ public class JvmMetricsRunnable implements Runnable {
         }
 
         /**
-         * Set the <code>GarbageCollectionMetricsCollector</code>. Defaults to an instance of
-         * <code>GarbageCollectionMetricsCollector</code>. This is for testing purposes only and should never be used
-         * by clients.
+         * Set the <code>GarbageCollectionMetricsCollector</code>. Defaults to
+         * an instance of <code>GarbageCollectionMetricsCollector</code>.
+         * Cannot be null. This is for testing purposes only and should never
+         * be used by clients.
          *
          * @param value A <code>GarbageCollectionMetricsCollector</code> instance.
          * @return This <code>Builder</code> instance.
@@ -340,9 +320,10 @@ public class JvmMetricsRunnable implements Runnable {
         }
 
         /**
-         * Set the <code>BufferPoolMetricsCollector</code>. Defaults to an instance of
-         * <code>BufferPoolMetricsCollector</code>. This is for testing purposes only and should never be used
-         * by clients.
+         * Set the <code>BufferPoolMetricsCollector</code>. Defaults to an
+         * instance of <code>BufferPoolMetricsCollector</code>.  Cannot be
+         * null. This is for testing purposes only and should never be used by
+         * clients.
          *
          * @param value A <code>BufferPoolMetricsCollector</code> instance.
          * @return This <code>Builder</code> instance.
@@ -353,8 +334,9 @@ public class JvmMetricsRunnable implements Runnable {
         }
 
         /**
-         * Set the <code>FileDescriptorMetricsCollector</code>. Defaults to an instance of
-         * <code>FileDescriptorMetricsCollector</code>. This is for testing purposes only and should never be used
+         * Set the <code>FileDescriptorMetricsCollector</code>. Defaults to
+         * an instance of <code>FileDescriptorMetricsCollector</code>. Cannot
+         * be null. This is for testing purposes only and should never be used
          * by clients.
          *
          * @param value A <code>FileDescriptorMetricsCollector</code> instance.
@@ -385,12 +367,13 @@ public class JvmMetricsRunnable implements Runnable {
     }
 
     /**
-    * An implementation class of <code>ManagementFactory</code> that is to be used for getting the actual values for jvm
-    * metrics from the java management API. This class exists to facilitate testing only and the clients should never
-    * have to explicitly instantiate this.
-    *
-    * @author Deepika Misra (deepika at groupon dot com)
-    */
+     * An implementation class of <code>ManagementFactory</code> that is to be
+     * used for getting the actual values for jvm metrics from the java
+     * management API. This class exists to facilitate testing only and the
+     * clients should never have to explicitly instantiate this.
+     *
+     * @author Deepika Misra (deepika at groupon dot com)
+     */
     /* package private */ static final class ManagementFactoryDefault implements ManagementFactory {
 
         /**
