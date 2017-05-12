@@ -19,6 +19,8 @@ import com.arpnetworking.metrics.Metrics;
 import com.arpnetworking.metrics.MetricsFactory;
 import org.slf4j.Logger;
 
+import java.util.Optional;
+
 /**
  * Abstract metrics collection runnable implementation.
  *
@@ -41,17 +43,17 @@ public abstract class AbstractMetricsRunnable implements Runnable {
         }
         */
         // Versus this ugliness:
-        Metrics metrics = null;
+        Optional<Metrics> metrics = Optional.empty();
         try {
-            metrics = _metricsFactory.create();
-            collectMetrics(metrics);
+            metrics = Optional.ofNullable(_metricsFactory.create());
+            metrics.ifPresent(this::collectMetrics);
             // CHECKSTYLE.OFF: IllegalCatch - No checked exceptions here
         } catch (final Exception e) {
             // CHECKSTYLE.ON: IllegalCatch
             handleException(e);
         } finally {
             try {
-                metrics.close();
+                metrics.ifPresent(Metrics::close);
                 // CHECKSTYLE.OFF: IllegalCatch - No checked exceptions here
             } catch (final Exception e) {
                 // CHECKSTYLE.ON: IllegalCatch

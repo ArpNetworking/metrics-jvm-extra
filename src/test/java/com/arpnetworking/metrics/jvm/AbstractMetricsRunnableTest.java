@@ -45,11 +45,31 @@ public final class AbstractMetricsRunnableTest {
     }
 
     @Test
+    public void testClose() {
+        Mockito.doReturn(_metrics).when(_metricsFactory).create();
+
+        new TestMetricsRunnable(_metricsFactory, _logger, true).run();
+        Mockito.verify(_metricsFactory).create();
+        Mockito.verify(_logger).warn(Matchers.anyString(), Matchers.any(RuntimeException.class));
+        Mockito.verify(_metrics).close();
+    }
+
+    @Test
+    public void testMetricsFactoryReturnsNull() {
+        Mockito.doReturn(null).when(_metricsFactory).create();
+
+        new TestMetricsRunnable(_metricsFactory, _logger, true).run();
+        Mockito.verify(_metricsFactory).create();
+        Mockito.verify(_logger, Mockito.never()).warn(Matchers.anyString(), Matchers.any(RuntimeException.class));
+    }
+
+    @Test
     public void testMetricsCloseThrows() {
         Mockito.doReturn(_metrics).when(_metricsFactory).create();
         Mockito.doThrow(new RuntimeException("Test Exception")).when(_metrics).close();
 
-        new TestMetricsRunnable(_metricsFactory, _logger).run();
+        new TestMetricsRunnable(_metricsFactory, _logger, false).run();
+        Mockito.verify(_metricsFactory).create();
         Mockito.verify(_logger).warn(Matchers.anyString(), Matchers.any(RuntimeException.class));
     }
 
@@ -57,13 +77,19 @@ public final class AbstractMetricsRunnableTest {
 
         /* package private */ TestMetricsRunnable(
                 final MetricsFactory metricsFactory,
-                final Logger logger) {
+                final Logger logger,
+                final boolean collectThrows) {
             super(metricsFactory, true, logger);
+            _collectThrows = collectThrows;
         }
 
         @Override
         protected void collectMetrics(final Metrics metrics) {
-            // Nothing to do.
+            if (_collectThrows) {
+                throw new RuntimeException("Collect throws!");
+            }
         }
+
+        private boolean _collectThrows;
     }
 }
