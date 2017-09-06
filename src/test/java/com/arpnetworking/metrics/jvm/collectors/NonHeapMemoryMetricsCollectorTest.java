@@ -21,7 +21,6 @@ import com.arpnetworking.metrics.jvm.ManagementFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import java.lang.management.MemoryPoolMXBean;
@@ -127,7 +126,7 @@ public final class NonHeapMemoryMetricsCollectorTest {
         NonHeapMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
         Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/used", 10L, Units.BYTE);
         Mockito.verify(_metrics, Mockito.never())
-                .setGauge(Matchers.eq("jvm/non_heap_memory/my_bean_1/max"), Matchers.anyLong(), Matchers.eq(Units.BYTE));
+                .setGauge(Mockito.eq("jvm/non_heap_memory/my_bean_1/max"), Mockito.anyLong(), Mockito.eq(Units.BYTE));
     }
 
     private MemoryUsage createMockBean(

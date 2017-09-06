@@ -30,7 +30,7 @@ public interface JvmMetricsCollector {
      * @param metrics An instance of <code>Metrics</code> that the collected metrics will be written to.
      * @param managementFactory An instance of <code>ManagementFactory</code>.
      */
-    void collect(final Metrics metrics, final ManagementFactory managementFactory);
+    void collect(Metrics metrics, ManagementFactory managementFactory);
 
     /**
      * The prefix for the jvm metrics namespace.

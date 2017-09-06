@@ -21,7 +21,6 @@ import com.arpnetworking.metrics.jvm.ManagementFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import java.lang.management.MemoryMXBean;
@@ -66,7 +65,7 @@ public final class HeapMemoryMetricsCollectorTest {
         Mockito.when(_memoryMXBean.getHeapMemoryUsage()).thenReturn(_memoryUsage);
         HeapMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
         Mockito.verify(_metrics).setGauge("jvm/heap_memory/used", 10L, Units.BYTE);
-        Mockito.verify(_metrics, Mockito.never()).setGauge(Matchers.eq("jvm/heap_memory/max"), Mockito.anyLong(), Matchers.eq(Units.BYTE));
+        Mockito.verify(_metrics, Mockito.never()).setGauge(Mockito.eq("jvm/heap_memory/max"), Mockito.anyLong(), Mockito.eq(Units.BYTE));
     }
 
     @Test(expected = Exception.class)
