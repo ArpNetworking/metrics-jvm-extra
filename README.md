@@ -121,13 +121,7 @@ public class JvmMetricsCollector {
 
     public static final void main(String[] args) {
         // Instantiate a MetricsFactory
-        // NOTE: The first argument is the path to write metrics to
-        final Sink sink = new TsdQueryLogSink.Builder()
-                .setPath(args[0])
-                .build();
-        final MetricsFactory metricsFactory = new TsdMetricsFactory.Builder()
-                .setSinks(Arrays.asList(sink))
-                .build();
+        final MetricsFactory metricsFactory = TsdMetricsFactory.newInstance("MyService", "MyCluster");
 
         // Create a default JvmMetricsRunnable
         final Runnable runnable = new JvmMetricsRunnable.Builder()
@@ -206,6 +200,45 @@ public class JvmMetricsCollector extends UntypedActor {
     private final Runnable jvmMetricsRunnable;
 
     private static final String COLLECT_MESSAGE = "COLLECT";
+}
+```
+
+### Executing with Vert.x
+
+Create a new verticle that inherits from the AbstractVerticle class. Next, schedule periodic with the desired collection interval to trigger the metrics collection. Execute the collection as blocking code because the underlying implementation uses JMX to gather JVM information it may perform blocking operations.
+
+```java
+import com.arpnetworking.metrics.MetricsFactory;
+import com.arpnetworking.metrics.impl.TsdMetricsFactory;
+import com.arpnetworking.metrics.jvm.JvmMetricsRunnable;
+import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Future;
+import io.vertx.core.Vertx;
+
+public final class MetricsVerticle extends AbstractVerticle {
+
+    @Override
+    public void start(final Future<Void> startFuture) {
+        // Instantiate a MetricsFactory
+        final MetricsFactory metricsFactory = TsdMetricsFactory.newInstance("MyService", "MyCluster");
+
+        // Create a default JvmMetricsRunnable
+        final Runnable runnable = new JvmMetricsRunnable.Builder()
+                .setMetricsFactory(metricsFactory)
+                .build();
+    
+        // Schedule JVM metrics collection
+        this.getVertx().setPeriodic(
+            jvmMetricsCollectionDuration.toMillis(),
+            id -> vertx.executeBlocking(future -> {
+                try {
+                    jvmMetricsRunnable.run();
+                } finally {
+                    future.complete();
+                }
+            }, 
+            ignored -> {}));
+    }
 }
 ```
 
