@@ -21,7 +21,6 @@ import com.arpnetworking.metrics.jvm.ManagementFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import java.lang.management.BufferPoolMXBean;
@@ -130,7 +129,7 @@ public final class BufferPoolMetricsCollectorTest {
         Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/count", 2L);
         Mockito.verify(_metrics).setGauge("jvm/buffer_pool/my_bean_1/total_capacity", 10L, Units.BYTE);
         Mockito.verify(_metrics, Mockito.never())
-                .setGauge(Matchers.eq("jvm/buffer_pool/my_bean_1/memory_used"), Matchers.anyLong(), Matchers.eq(Units.BYTE));
+                .setGauge(Mockito.eq("jvm/buffer_pool/my_bean_1/memory_used"), Mockito.anyLong(), Mockito.eq(Units.BYTE));
     }
 
     private void createMockBean(

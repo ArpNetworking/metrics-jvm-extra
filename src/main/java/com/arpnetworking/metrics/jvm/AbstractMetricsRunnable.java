@@ -67,7 +67,7 @@ public abstract class AbstractMetricsRunnable implements Runnable {
      *
      * @param metrics this unit of work's {@code Metrics} instance
      */
-    protected abstract void collectMetrics(final Metrics metrics);
+    protected abstract void collectMetrics(Metrics metrics);
 
     /**
      * Handles exceptions either by logging and swalling or by rethrowing as

@@ -19,7 +19,6 @@ import com.arpnetworking.metrics.Metrics;
 import com.arpnetworking.metrics.MetricsFactory;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -50,7 +49,7 @@ public final class AbstractMetricsRunnableTest {
 
         new TestMetricsRunnable(_metricsFactory, _logger, true).run();
         Mockito.verify(_metricsFactory).create();
-        Mockito.verify(_logger).warn(Matchers.anyString(), Matchers.any(RuntimeException.class));
+        Mockito.verify(_logger).warn(Mockito.anyString(), Mockito.any(RuntimeException.class));
         Mockito.verify(_metrics).close();
     }
 
@@ -60,7 +59,7 @@ public final class AbstractMetricsRunnableTest {
 
         new TestMetricsRunnable(_metricsFactory, _logger, true).run();
         Mockito.verify(_metricsFactory).create();
-        Mockito.verify(_logger, Mockito.never()).warn(Matchers.anyString(), Matchers.any(RuntimeException.class));
+        Mockito.verify(_logger, Mockito.never()).warn(Mockito.anyString(), Mockito.any(RuntimeException.class));
     }
 
     @Test
@@ -70,7 +69,7 @@ public final class AbstractMetricsRunnableTest {
 
         new TestMetricsRunnable(_metricsFactory, _logger, false).run();
         Mockito.verify(_metricsFactory).create();
-        Mockito.verify(_logger).warn(Matchers.anyString(), Matchers.any(RuntimeException.class));
+        Mockito.verify(_logger).warn(Mockito.anyString(), Mockito.any(RuntimeException.class));
     }
 
     private static final class TestMetricsRunnable extends AbstractMetricsRunnable {
