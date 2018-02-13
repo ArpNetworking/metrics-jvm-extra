@@ -16,21 +16,22 @@
 package com.arpnetworking.metrics.jvm.collectors;
 
 import com.arpnetworking.metrics.Metrics;
-import com.arpnetworking.metrics.Units;
 import com.arpnetworking.metrics.jvm.ManagementFactory;
 
 import java.lang.management.MemoryPoolMXBean;
-import java.lang.management.MemoryUsage;
+import java.lang.management.MemoryType;
 import java.util.List;
 
 /**
- * Collector class for JVM memory usage metrics for each memory pool. Uses the Java Management API to get the metrics
- * data.
+ * Collector class for JVM memory usage metrics for each non-heap memory pool. Uses the Java Management API to get the
+ * metrics data.
  *
+ * @deprecated Use {@link PoolMemoryMetricsCollector} instead.
  * @author Deepika Misra (deepika at groupon dot com)
 */
 // CHECKSTYLE.OFF: FinalClass - Allow clients to inherit from this.
-public class NonHeapMemoryMetricsCollector implements JvmMetricsCollector {
+@Deprecated
+public class NonHeapMemoryMetricsCollector extends PoolMemoryMetricsCollector {
 // CHECKSTYLE.ON: FinalClass
     /**
      * Creates a new instance of <code>JvmMetricsCollector</code>.
@@ -45,29 +46,8 @@ public class NonHeapMemoryMetricsCollector implements JvmMetricsCollector {
     public void collect(final Metrics metrics, final ManagementFactory managementFactory) {
         final List<MemoryPoolMXBean> memoryPoolBeans = managementFactory.getMemoryPoolMXBeans();
         for (final MemoryPoolMXBean pool : memoryPoolBeans) {
-            final MemoryUsage usage = pool.getUsage();
-            metrics.setGauge(
-                    String.join(
-                            "/",
-                            ROOT_NAMESPACE,
-                            NON_HEAP_MEMORY,
-                            MetricsUtil.convertToSnakeCase(pool.getName()),
-                            MEMORY_USED),
-                    usage.getUsed(),
-                    Units.BYTE
-            );
-            final long memoryMax = usage.getMax();
-            if (memoryMax != -1) {
-                metrics.setGauge(
-                        String.join(
-                                "/",
-                                ROOT_NAMESPACE,
-                                NON_HEAP_MEMORY,
-                                MetricsUtil.convertToSnakeCase(pool.getName()),
-                                MEMORY_MAX),
-                        memoryMax,
-                        Units.BYTE
-                );
+            if (MemoryType.NON_HEAP.equals(pool.getType())) {
+                recordMetricsForPool(pool, metrics);
             }
         }
     }
@@ -76,8 +56,4 @@ public class NonHeapMemoryMetricsCollector implements JvmMetricsCollector {
      * Protected constructor.
      */
     protected NonHeapMemoryMetricsCollector() {}
-
-    private static final String MEMORY_USED = "used";
-    private static final String MEMORY_MAX = "max";
-    private static final String NON_HEAP_MEMORY = "non_heap_memory";
 }

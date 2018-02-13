@@ -34,8 +34,7 @@ import java.util.Collections;
  *
  * @author Deepika Misra (deepika at groupon dot com)
  */
-@SuppressWarnings("deprecation")
-public final class NonHeapMemoryMetricsCollectorTest {
+public final class PoolMemoryMetricsCollectorTest {
 
     @Before
     public void setUp() {
@@ -58,8 +57,17 @@ public final class NonHeapMemoryMetricsCollectorTest {
     @Test
     public void testCollectWithNoPoolBeans() {
         Mockito.doReturn(Collections.emptyList()).when(_managementFactory).getMemoryPoolMXBeans();
-        NonHeapMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
+        PoolMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
         Mockito.verifyNoMoreInteractions(_metrics);
+    }
+
+    @Test
+    public void testCollectWithSingleBeans() {
+        createMockBean(_memoryPoolMXBean1, "My Bean 1", 10L, 100L, MemoryType.NON_HEAP);
+        Mockito.doReturn(Collections.singletonList(_memoryPoolMXBean1)).when(_managementFactory).getMemoryPoolMXBeans();
+        PoolMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
+        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/used", 10L, Units.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/max", 100L, Units.BYTE);
     }
 
     @Test
@@ -70,12 +78,62 @@ public final class NonHeapMemoryMetricsCollectorTest {
         Mockito.doReturn(Arrays.asList(_memoryPoolMXBean1, _memoryPoolMXBean2, _memoryPoolMXBean3))
                 .when(_managementFactory)
                 .getMemoryPoolMXBeans();
-        NonHeapMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
+        PoolMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
         Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/used", 10L, Units.BYTE);
         Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/max", 100L, Units.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/heap_memory/my_bean_2/used", 20L, Units.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/heap_memory/my_bean_2/max", 300L, Units.BYTE);
         Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_3/used", 30L, Units.BYTE);
         Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_3/max", 400L, Units.BYTE);
         Mockito.verifyNoMoreInteractions(_metrics);
+    }
+
+    @Test(expected = Exception.class)
+    public void testCollectWithExceptionInGettingPools() {
+        Mockito.doThrow(Exception.class).when(_managementFactory).getMemoryPoolMXBeans();
+        PoolMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
+    }
+
+    @Test(expected = Exception.class)
+    public void testCollectWithExceptionInGetUsage() {
+        createMockBean(_memoryPoolMXBean2, "My Bean 2", 10L, 100L, MemoryType.NON_HEAP);
+        Mockito.doThrow(Exception.class).when(_memoryPoolMXBean1).getUsage();
+        Mockito.doReturn(Arrays.asList(_memoryPoolMXBean1, _memoryPoolMXBean2))
+                .when(_managementFactory)
+                .getMemoryPoolMXBeans();
+        PoolMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
+    }
+
+    @Test(expected = Exception.class)
+    public void testCollectWithExceptionInGetUsed() {
+        createMockBean(_memoryPoolMXBean1, "My Bean 1", 10L, 100L, MemoryType.NON_HEAP);
+        final MemoryUsage usage = createMockBean(_memoryPoolMXBean2, "My Bean 2", 30L, 400L, MemoryType.NON_HEAP);
+        Mockito.doThrow(Exception.class).when(usage).getUsed();
+        Mockito.doReturn(Arrays.asList(_memoryPoolMXBean1, _memoryPoolMXBean2))
+                .when(_managementFactory)
+                .getMemoryPoolMXBeans();
+        PoolMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
+    }
+
+    @Test(expected = Exception.class)
+    public void testCollectWithExceptionInGetMax() {
+        createMockBean(_memoryPoolMXBean1, "My Bean 1", 10L, 100L, MemoryType.NON_HEAP);
+        final MemoryUsage usage = createMockBean(_memoryPoolMXBean2, "My Bean 2", 30L, 400L, MemoryType.NON_HEAP);
+        Mockito.doThrow(Exception.class).when(usage).getMax();
+        Mockito.doReturn(Arrays.asList(_memoryPoolMXBean1, _memoryPoolMXBean2))
+                .when(_managementFactory)
+                .getMemoryPoolMXBeans();
+        PoolMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
+    }
+
+    @Test
+    public void testCollectWithUndefinedMax() {
+        createMockBean(_memoryPoolMXBean1, "My Bean 1", 10L, -1, MemoryType.NON_HEAP);
+        Mockito.doReturn(Collections.singletonList(_memoryPoolMXBean1)).when(_managementFactory).getMemoryPoolMXBeans();
+        PoolMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
+        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/used", 10L, Units.BYTE);
+        Mockito.verify(_metrics, Mockito.never())
+                .setGauge(Mockito.eq("jvm/non_heap_memory/my_bean_1/max"), Mockito.anyLong(), Mockito.eq(Units.BYTE));
     }
 
     private MemoryUsage createMockBean(
