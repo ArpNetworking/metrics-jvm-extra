@@ -22,7 +22,7 @@ import com.arpnetworking.metrics.jvm.collectors.FileDescriptorMetricsCollector;
 import com.arpnetworking.metrics.jvm.collectors.GarbageCollectionMetricsCollector;
 import com.arpnetworking.metrics.jvm.collectors.HeapMemoryMetricsCollector;
 import com.arpnetworking.metrics.jvm.collectors.JvmMetricsCollector;
-import com.arpnetworking.metrics.jvm.collectors.NonHeapMemoryMetricsCollector;
+import com.arpnetworking.metrics.jvm.collectors.PoolMemoryMetricsCollector;
 import com.arpnetworking.metrics.jvm.collectors.ThreadMetricsCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +64,9 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         }
         if (builder._collectNonHeapMemoryMetrics) {
             _collectorsEnabled.add(builder._nonHeapMemoryMetricsCollector);
+        }
+        if (builder._collectPoolMemoryMetrics) {
+            _collectorsEnabled.add(builder._poolMemoryMetricsCollector);
         }
         if (builder._collectThreadMetrics) {
             _collectorsEnabled.add(builder._threadMetricsCollector);
@@ -108,6 +111,9 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
             if (_collectNonHeapMemoryMetrics == null) {
                 throw new IllegalArgumentException("CollectNonHeapMemoryMetrics cannot be null.");
             }
+            if (_collectPoolMemoryMetrics == null) {
+                throw new IllegalArgumentException("CollectPoolMemoryMetrics cannot be null.");
+            }
             if (_collectHeapMemoryMetrics == null) {
                 throw new IllegalArgumentException("CollectHeapMemoryMetrics cannot be null.");
             }
@@ -125,6 +131,9 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
             }
             if (_nonHeapMemoryMetricsCollector == null) {
                 throw new IllegalArgumentException("NonHeapMemoryMetricsCollector cannot be null.");
+            }
+            if (_poolMemoryMetricsCollector == null) {
+                throw new IllegalArgumentException("PoolMemoryMetricsCollector cannot be null.");
             }
             if (_heapMemoryMetricsCollector == null) {
                 throw new IllegalArgumentException("HeapMemoryMetricsCollector cannot be null.");
@@ -188,14 +197,28 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
          * collected. A true value indicates that these metrics need to
          * be collected. Optional. Defaults to true. Cannot be null.
          *
+         * @deprecated Use the PoolMemoryMetricsCollector
          * @param value A <code>Boolean</code> value.
          * @return This <code>Builder</code> instance.
          */
+        @Deprecated
         public Builder setCollectNonHeapMemoryMetrics(final Boolean value) {
             _collectNonHeapMemoryMetrics = value;
             return this;
         }
 
+        /**
+         * Set the flag indicating if Non-Heap Memory metrics should be
+         * collected. A true value indicates that these metrics need to
+         * be collected. Optional. Defaults to true. Cannot be null.
+         *
+         * @param value A <code>Boolean</code> value.
+         * @return This <code>Builder</code> instance.
+         */
+        public Builder setCollectPoolMemoryMetrics(final Boolean value) {
+            _collectPoolMemoryMetrics = value;
+            return this;
+        }
 
         /**
          * Set the flag indicating if Thread metrics should be collected. A
@@ -283,11 +306,27 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
          * null. This is for testing purposes only and should never be used by
          * clients.
          *
+         * @deprecated Set the PoolMemoryMetricsCollector instead
          * @param value A <code>NonHeapMemoryMetricsCollector</code> instance.
          * @return This <code>Builder</code> instance.
          */
+        @Deprecated
         /* package private */ Builder setNonHeapMemoryMetricsCollector(final JvmMetricsCollector value) {
             _nonHeapMemoryMetricsCollector = value;
+            return this;
+        }
+
+        /**
+         * Set the <code>PoolMemoryMetricsCollector</code>. Defaults to an
+         * instance of <code>PoolMemoryMetricsCollector</code>.  Cannot be
+         * null. This is for testing purposes only and should never be used by
+         * clients.
+         *
+         * @param value A <code>PoolMemoryMetricsCollector</code> instance.
+         * @return This <code>Builder</code> instance.
+         */
+        /* package private */ Builder setPoolMemoryMetricsCollector(final JvmMetricsCollector value) {
+            _poolMemoryMetricsCollector = value;
             return this;
         }
 
@@ -350,18 +389,22 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         private MetricsFactory _metricsFactory;
         private ManagementFactory _managementFactory = MANAGEMENT_FACTORY_DEFAULT;
         private Boolean _swallowException = true;
-        private Boolean _collectNonHeapMemoryMetrics = true;
+        private Boolean _collectNonHeapMemoryMetrics = false;
+        private Boolean _collectPoolMemoryMetrics = true;
         private Boolean _collectHeapMemoryMetrics = true;
         private Boolean _collectThreadMetrics = true;
         private Boolean _collectGarbageCollectionMetrics = true;
         private Boolean _collectBufferPoolMetrics = true;
         private Boolean _collectFileDescriptorMetrics = true;
-        private JvmMetricsCollector _nonHeapMemoryMetricsCollector = NonHeapMemoryMetricsCollector.newInstance();
+        private JvmMetricsCollector _poolMemoryMetricsCollector = PoolMemoryMetricsCollector.newInstance();
         private JvmMetricsCollector _heapMemoryMetricsCollector = HeapMemoryMetricsCollector.newInstance();
         private JvmMetricsCollector _threadMetricsCollector = ThreadMetricsCollector.newInstance();
         private JvmMetricsCollector _garbageCollectionMetricsCollector = GarbageCollectionMetricsCollector.newInstance();
         private JvmMetricsCollector _bufferPoolMetricsCollector = BufferPoolMetricsCollector.newInstance();
         private JvmMetricsCollector _fileDescriptorMetricsCollector = FileDescriptorMetricsCollector.newInstance();
+        @SuppressWarnings("deprecation")
+        private JvmMetricsCollector _nonHeapMemoryMetricsCollector =
+                com.arpnetworking.metrics.jvm.collectors.NonHeapMemoryMetricsCollector.newInstance();
 
         private static final ManagementFactory MANAGEMENT_FACTORY_DEFAULT = ManagementFactoryDefault.newInstance();
     }

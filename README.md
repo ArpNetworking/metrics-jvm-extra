@@ -97,7 +97,7 @@ JvmMetricsRunnable.Builder()
     .setMetricsFactory(metricsFactory)
     .setCollectGarbageCollectionMetrics(false)
     .setCollectThreadMetrics(false)
-    .setCollectNonHeapMemoryMetrics(false)
+    .setCollectPoolMemoryMetrics(false)
     .setCollectHeapMemoryMetrics(false)
     .build();
 ```
