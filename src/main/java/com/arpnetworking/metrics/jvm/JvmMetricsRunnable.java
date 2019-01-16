@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2015 Groupon.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -91,7 +91,7 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
      */
     // CHECKSTYLE.OFF: FinalClass - Allow clients to inherit from this.
     public static class Builder {
-    // CHECKSTYLE.ON: FinalClass
+        // CHECKSTYLE.ON: FinalClass
 
         /**
          * Builds an instance of <code>JvmMetricsRunnable</code>.
@@ -103,54 +103,111 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
                 throw new IllegalArgumentException("MetricsFactory cannot be null.");
             }
             if (_managementFactory == null) {
-                throw new IllegalArgumentException("ManagementFactory cannot be null.");
+                _managementFactory = DEFAULT_MANAGEMENT_FACTORY;
+                LOGGER.info(String.format(
+                        "Defaulted null management factory; managementFactory=%s",
+                        _managementFactory));
             }
             if (_swallowException == null) {
-                throw new IllegalArgumentException("SwallowException cannot be null.");
+                _swallowException = DEFAULT_SWALLOW_EXCEPTION;
+                LOGGER.info(String.format(
+                        "Defaulted null swallow exception; swallowException=%s",
+                        _swallowException));
             }
+            // TODO(ville): The collection/collector pattern should be formalized.
+            defaultCollection();
+            defaultCollectors();
+            return new JvmMetricsRunnable(this);
+        }
+
+        private void defaultCollection() {
             if (_collectNonHeapMemoryMetrics == null) {
-                throw new IllegalArgumentException("CollectNonHeapMemoryMetrics cannot be null.");
+                _collectNonHeapMemoryMetrics = DEFAULT_COLLECT_NON_HEAP_MEMORY_METRICS;
+                LOGGER.info(String.format(
+                        "Defaulted null collect non heap memory metrics; collectNonHeapMemoryMetrics=%s",
+                        _collectNonHeapMemoryMetrics));
             }
             if (_collectPoolMemoryMetrics == null) {
-                throw new IllegalArgumentException("CollectPoolMemoryMetrics cannot be null.");
+                _collectPoolMemoryMetrics = DEFAULT_COLLECT_POOL_MEMORY_METRICS;
+                LOGGER.info(String.format(
+                        "Defaulted null collect pool memory metrics; collectPoolMemoryMetrics=%s",
+                        _collectPoolMemoryMetrics));
             }
             if (_collectHeapMemoryMetrics == null) {
-                throw new IllegalArgumentException("CollectHeapMemoryMetrics cannot be null.");
+                _collectHeapMemoryMetrics = DEFAULT_COLLECT_HEAP_MEMORY_METRICS;
+                LOGGER.info(String.format(
+                        "Defaulted null collect heap memory metrics; collectHeapMemoryMetrics=%s",
+                        _collectHeapMemoryMetrics));
             }
             if (_collectThreadMetrics == null) {
-                throw new IllegalArgumentException("CollectThreadMetrics cannot be null.");
+                _collectThreadMetrics = DEFAULT_COLLECT_THREAD_METRICS;
+                LOGGER.info(String.format(
+                        "Defaulted null collect thread metrics; collectThreadMetrics=%s",
+                        _collectThreadMetrics));
             }
             if (_collectGarbageCollectionMetrics == null) {
-                throw new IllegalArgumentException("CollectGarbageCollectionMetrics cannot be null.");
+                _collectGarbageCollectionMetrics = DEFAULT_COLLECT_GC_METRICS;
+                LOGGER.info(String.format(
+                        "Defaulted null collect garbage collection metrics; collectGarbageCollectionMetrics=%s",
+                        _collectGarbageCollectionMetrics));
             }
             if (_collectBufferPoolMetrics == null) {
-                throw new IllegalArgumentException("CollectBufferPoolMetrics cannot be null.");
+                _collectBufferPoolMetrics = DEFAULT_COLLECT_BUFFER_POOL_METRICS;
+                LOGGER.info(String.format(
+                        "Defaulted null collect buffer pool metrics; collectBufferPoolMetrics=%s",
+                        _collectBufferPoolMetrics));
             }
             if (_collectFileDescriptorMetrics == null) {
-                throw new IllegalArgumentException("CollectFileDescriptorMetrics cannot be null.");
+                _collectFileDescriptorMetrics = DEFAULT_COLLECT_FILE_DESCRIPTOR_METRICS;
+                LOGGER.info(String.format(
+                        "Defaulted null collect file descriptor metrics; collectFileDescriptorMetrics=%s",
+                        _collectFileDescriptorMetrics));
             }
+        }
+
+        private void defaultCollectors() {
             if (_nonHeapMemoryMetricsCollector == null) {
-                throw new IllegalArgumentException("NonHeapMemoryMetricsCollector cannot be null.");
+                _nonHeapMemoryMetricsCollector = DEFAULT_HEAP_MEMORY_METRICS_COLLECTOR;
+                LOGGER.info(String.format(
+                        "Defaulted null heap memory metrics collector; nonHeapMemoryMetricsCollector=%s",
+                        _nonHeapMemoryMetricsCollector));
             }
             if (_poolMemoryMetricsCollector == null) {
-                throw new IllegalArgumentException("PoolMemoryMetricsCollector cannot be null.");
+                _poolMemoryMetricsCollector = DEFAULT_POOL_MEMORY_METRICS_COLLECTOR;
+                LOGGER.info(String.format(
+                        "Defaulted null pool memory metrics collector; poolMemoryMetricsCollector=%s",
+                        _poolMemoryMetricsCollector));
             }
             if (_heapMemoryMetricsCollector == null) {
-                throw new IllegalArgumentException("HeapMemoryMetricsCollector cannot be null.");
+                _heapMemoryMetricsCollector = DEFAULT_HEAP_MEMORY_METRICS_COLLECTOR;
+                LOGGER.info(String.format(
+                        "Defaulted null heap memory metrics collector; heapMemoryMetricsCollector=%s",
+                        _heapMemoryMetricsCollector));
             }
             if (_threadMetricsCollector == null) {
-                throw new IllegalArgumentException("ThreadMetricsCollector cannot be null.");
+                _threadMetricsCollector = DEFAULT_THREAD_METRICS_COLLECTOR;
+                LOGGER.info(String.format(
+                        "Defaulted null thread metrics collector; threadMetricsCollector=%s",
+                        _threadMetricsCollector));
             }
             if (_garbageCollectionMetricsCollector == null) {
-                throw new IllegalArgumentException("GarbageCollectionMetricsCollector cannot be null.");
+                _garbageCollectionMetricsCollector = DEFAULT_GC_METRICS_COLLECTOR;
+                LOGGER.info(String.format(
+                        "Defaulted null garbage collector metrics collector; garbageCollectionMetricsCollector=%s",
+                        _garbageCollectionMetricsCollector));
             }
             if (_bufferPoolMetricsCollector == null) {
-                throw new IllegalArgumentException("BufferPoolMetricsCollector cannot be null.");
+                _bufferPoolMetricsCollector = DEFAULT_BUFFER_POOL_METRICS_COLLECTOR;
+                LOGGER.info(String.format(
+                        "Defaulted null buffer pool metrics collector; bufferPoolMetricsCollector=%s",
+                        _bufferPoolMetricsCollector));
             }
             if (_fileDescriptorMetricsCollector == null) {
-                throw new IllegalArgumentException("FileDescriptorMetricsCollector cannot be null.");
+                _fileDescriptorMetricsCollector = DEFAULT_FILE_DESCRIPTOR_METRICS_COLLECTOR;
+                LOGGER.info(String.format(
+                        "Defaulted null file descriptor metrics collector; fileDescriptorMetricsCollector=%s",
+                        _fileDescriptorMetricsCollector));
             }
-            return new JvmMetricsRunnable(this);
         }
 
         /**
@@ -197,9 +254,9 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
          * collected. A true value indicates that these metrics need to
          * be collected. Optional. Defaults to true. Cannot be null.
          *
-         * @deprecated Use the PoolMemoryMetricsCollector
          * @param value A <code>Boolean</code> value.
          * @return This <code>Builder</code> instance.
+         * @deprecated Use the PoolMemoryMetricsCollector
          */
         @Deprecated
         public Builder setCollectNonHeapMemoryMetrics(final Boolean value) {
@@ -306,9 +363,9 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
          * null. This is for testing purposes only and should never be used by
          * clients.
          *
-         * @deprecated Set the PoolMemoryMetricsCollector instead
          * @param value A <code>NonHeapMemoryMetricsCollector</code> instance.
          * @return This <code>Builder</code> instance.
+         * @deprecated Set the PoolMemoryMetricsCollector instead
          */
         @Deprecated
         /* package private */ Builder setNonHeapMemoryMetricsCollector(final JvmMetricsCollector value) {
@@ -387,26 +444,48 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         }
 
         private MetricsFactory _metricsFactory;
-        private ManagementFactory _managementFactory = MANAGEMENT_FACTORY_DEFAULT;
-        private Boolean _swallowException = true;
-        private Boolean _collectNonHeapMemoryMetrics = false;
-        private Boolean _collectPoolMemoryMetrics = true;
-        private Boolean _collectHeapMemoryMetrics = true;
-        private Boolean _collectThreadMetrics = true;
-        private Boolean _collectGarbageCollectionMetrics = true;
-        private Boolean _collectBufferPoolMetrics = true;
-        private Boolean _collectFileDescriptorMetrics = true;
-        private JvmMetricsCollector _poolMemoryMetricsCollector = PoolMemoryMetricsCollector.newInstance();
-        private JvmMetricsCollector _heapMemoryMetricsCollector = HeapMemoryMetricsCollector.newInstance();
-        private JvmMetricsCollector _threadMetricsCollector = ThreadMetricsCollector.newInstance();
-        private JvmMetricsCollector _garbageCollectionMetricsCollector = GarbageCollectionMetricsCollector.newInstance();
-        private JvmMetricsCollector _bufferPoolMetricsCollector = BufferPoolMetricsCollector.newInstance();
-        private JvmMetricsCollector _fileDescriptorMetricsCollector = FileDescriptorMetricsCollector.newInstance();
+        private ManagementFactory _managementFactory = DEFAULT_MANAGEMENT_FACTORY;
+        private Boolean _swallowException = DEFAULT_SWALLOW_EXCEPTION;
+        private Boolean _collectNonHeapMemoryMetrics = DEFAULT_COLLECT_NON_HEAP_MEMORY_METRICS;
+        private Boolean _collectPoolMemoryMetrics = DEFAULT_COLLECT_POOL_MEMORY_METRICS;
+        private Boolean _collectHeapMemoryMetrics = DEFAULT_COLLECT_HEAP_MEMORY_METRICS;
+        private Boolean _collectThreadMetrics = DEFAULT_COLLECT_THREAD_METRICS;
+        private Boolean _collectGarbageCollectionMetrics = DEFAULT_COLLECT_GC_METRICS;
+        private Boolean _collectBufferPoolMetrics = DEFAULT_COLLECT_BUFFER_POOL_METRICS;
+        private Boolean _collectFileDescriptorMetrics = DEFAULT_COLLECT_FILE_DESCRIPTOR_METRICS;
+        private JvmMetricsCollector _poolMemoryMetricsCollector = DEFAULT_POOL_MEMORY_METRICS_COLLECTOR;
+        private JvmMetricsCollector _heapMemoryMetricsCollector = DEFAULT_HEAP_MEMORY_METRICS_COLLECTOR;
+        private JvmMetricsCollector _threadMetricsCollector = DEFAULT_THREAD_METRICS_COLLECTOR;
+        private JvmMetricsCollector _garbageCollectionMetricsCollector = DEFAULT_GC_METRICS_COLLECTOR;
+        private JvmMetricsCollector _bufferPoolMetricsCollector = DEFAULT_BUFFER_POOL_METRICS_COLLECTOR;
+        private JvmMetricsCollector _fileDescriptorMetricsCollector = DEFAULT_FILE_DESCRIPTOR_METRICS_COLLECTOR;
+        private JvmMetricsCollector _nonHeapMemoryMetricsCollector = DEFAULT_NON_HEAP_MEMORY_METRICS_COLLECTOR;
+
+        private static final ManagementFactory DEFAULT_MANAGEMENT_FACTORY = ManagementFactoryDefault.newInstance();
+        private static final Boolean DEFAULT_SWALLOW_EXCEPTION = true;
+        private static final Boolean DEFAULT_COLLECT_NON_HEAP_MEMORY_METRICS = false;
+        private static final Boolean DEFAULT_COLLECT_POOL_MEMORY_METRICS = true;
+        private static final Boolean DEFAULT_COLLECT_HEAP_MEMORY_METRICS = true;
+        private static final Boolean DEFAULT_COLLECT_THREAD_METRICS = true;
+        private static final Boolean DEFAULT_COLLECT_GC_METRICS = true;
+        private static final Boolean DEFAULT_COLLECT_BUFFER_POOL_METRICS = true;
+        private static final Boolean DEFAULT_COLLECT_FILE_DESCRIPTOR_METRICS = true;
+        private static final JvmMetricsCollector DEFAULT_POOL_MEMORY_METRICS_COLLECTOR =
+                PoolMemoryMetricsCollector.newInstance();
+        private static final JvmMetricsCollector DEFAULT_HEAP_MEMORY_METRICS_COLLECTOR =
+                HeapMemoryMetricsCollector.newInstance();
+        private static final JvmMetricsCollector DEFAULT_THREAD_METRICS_COLLECTOR =
+                ThreadMetricsCollector.newInstance();
+        private static final JvmMetricsCollector DEFAULT_GC_METRICS_COLLECTOR =
+                GarbageCollectionMetricsCollector.newInstance();
+        private static final JvmMetricsCollector DEFAULT_BUFFER_POOL_METRICS_COLLECTOR =
+                BufferPoolMetricsCollector.newInstance();
+        private static final JvmMetricsCollector DEFAULT_FILE_DESCRIPTOR_METRICS_COLLECTOR =
+                FileDescriptorMetricsCollector.newInstance();
         @SuppressWarnings("deprecation")
-        private JvmMetricsCollector _nonHeapMemoryMetricsCollector =
+        private static final JvmMetricsCollector DEFAULT_NON_HEAP_MEMORY_METRICS_COLLECTOR =
                 com.arpnetworking.metrics.jvm.collectors.NonHeapMemoryMetricsCollector.newInstance();
 
-        private static final ManagementFactory MANAGEMENT_FACTORY_DEFAULT = ManagementFactoryDefault.newInstance();
     }
 
     /**
@@ -424,7 +503,8 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
          *
          * @return An instance of <code>ManagementFactoryDefault</code>
          */
-        /* package private */ static ManagementFactory newInstance() {
+        /* package private */
+        static ManagementFactory newInstance() {
             return new ManagementFactoryDefault();
         }
 
@@ -458,6 +538,7 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
             return java.lang.management.ManagementFactory.getOperatingSystemMXBean();
         }
 
-        private ManagementFactoryDefault() {}
+        private ManagementFactoryDefault() {
+        }
     }
 }

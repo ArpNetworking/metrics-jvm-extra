@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2017 Inscope Metrics Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,7 @@ package com.arpnetworking.metrics.jvm;
 
 import com.arpnetworking.metrics.Metrics;
 import com.arpnetworking.metrics.MetricsFactory;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +40,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Ville Koskela (ville dot koskela at inscopemetrics dot com)
  */
+@SuppressFBWarnings("NP_NONNULL_PARAM_VIOLATION")
 public final class ExecutorServiceMetricsRunnableTest {
 
     @Mock
@@ -174,16 +176,17 @@ public final class ExecutorServiceMetricsRunnableTest {
                 .build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testBuilderExecutorServicesNull() {
+    @Test
+    public void testBuilderExecutorServicesNullToDefault() {
         new ExecutorServiceMetricsRunnable.Builder()
                 .setMetricsFactory(_metricsFactory)
                 .setSwallowException(false)
+                .setExecutorServices(null)
                 .build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testBuilderSwallowExceptionsNull() {
+    @Test
+    public void testBuilderSwallowExceptionsNullToDefault() {
         new ExecutorServiceMetricsRunnable.Builder()
                 .setMetricsFactory(_metricsFactory)
                 .setExecutorServices(Collections.emptyMap())

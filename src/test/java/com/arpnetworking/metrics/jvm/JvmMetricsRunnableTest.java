@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2015 Groupon.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +20,7 @@ import com.arpnetworking.metrics.MetricsFactory;
 import com.arpnetworking.metrics.jvm.collectors.BufferPoolMetricsCollector;
 import com.arpnetworking.metrics.jvm.collectors.FileDescriptorMetricsCollector;
 import com.arpnetworking.metrics.jvm.collectors.JvmMetricsCollector;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,6 +33,7 @@ import org.mockito.Mockito;
  * @author Deepika Misra (deepika at groupon dot com)
  */
 @SuppressWarnings("deprecation")
+@SuppressFBWarnings("NP_NONNULL_PARAM_VIOLATION")
 public final class JvmMetricsRunnableTest {
 
     @Before
@@ -65,83 +67,83 @@ public final class JvmMetricsRunnableTest {
         createJvmMetricsRunnableBuilder().setMetricsFactory(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableSwallowExceptionNullCase() {
+    @Test
+    public void testCreateRunnableSwallowExceptionNullToDefault() {
         createJvmMetricsRunnableBuilder().setSwallowException(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableCollectHeapMemoryMetricsNullCase() {
+    @Test
+    public void testCreateRunnableCollectHeapMemoryMetricsNullToDefault() {
         createJvmMetricsRunnableBuilder().setCollectHeapMemoryMetrics(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableCollectNonHeapMemoryMetricsNullCase() {
+    @Test
+    public void testCreateRunnableCollectNonHeapMemoryMetricsNullToDefault() {
         createJvmMetricsRunnableBuilder().setCollectNonHeapMemoryMetrics(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableCollectPoolMemoryMetricsNullCase() {
+    @Test
+    public void testCreateRunnableCollectPoolMemoryMetricsNullToDefault() {
         createJvmMetricsRunnableBuilder().setCollectPoolMemoryMetrics(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableCollectThreadMetricsNullCase() {
+    @Test
+    public void testCreateRunnableCollectThreadMetricsNullToDefault() {
         createJvmMetricsRunnableBuilder().setCollectThreadMetrics(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableCollectBufferPoolMetricsNullCase() {
+    @Test
+    public void testCreateRunnableCollectBufferPoolMetricsNullToDefault() {
         createJvmMetricsRunnableBuilder().setCollectBufferPoolMetrics(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableCollectGcMetricsNullCase() {
+    @Test
+    public void testCreateRunnableCollectGcMetricsNullToDefault() {
         createJvmMetricsRunnableBuilder().setCollectGarbageCollectionMetrics(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableCollectFileDescriptorNullCase() {
+    @Test
+    public void testCreateRunnableCollectFileDescriptorNullToDefault() {
         createJvmMetricsRunnableBuilder().setCollectFileDescriptorMetrics(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableManagementFactoryNullCase() {
+    @Test
+    public void testCreateRunnableManagementFactoryNullToDefault() {
         createJvmMetricsRunnableBuilder().setManagementFactory(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableNonHeapMemoryMetricsCollectorNullCase() {
+    @Test
+    public void testCreateRunnableNonHeapMemoryMetricsCollectorNullToDefault() {
         createJvmMetricsRunnableBuilder().setNonHeapMemoryMetricsCollector(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnablePoolMemoryMetricsCollectorNullCase() {
+    @Test
+    public void testCreateRunnablePoolMemoryMetricsCollectorNullToDefault() {
         createJvmMetricsRunnableBuilder().setPoolMemoryMetricsCollector(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableHeapMemoryMetricsCollectorNullCase() {
+    @Test
+    public void testCreateRunnableHeapMemoryMetricsCollectorNullToDefault() {
         createJvmMetricsRunnableBuilder().setHeapMemoryMetricsCollector(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableThreadyMetricsCollectorNullCase() {
+    @Test
+    public void testCreateRunnableThreadyMetricsCollectorNullToDefault() {
         createJvmMetricsRunnableBuilder().setThreadMetricsCollector(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableGarbageCollectionMetricsCollectorNullCase() {
+    @Test
+    public void testCreateRunnableGarbageCollectionMetricsCollectorNullToDefault() {
         createJvmMetricsRunnableBuilder().setGarbageCollectionMetricsCollector(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableBufferPoolMetricsCollectorNullCase() {
+    @Test
+    public void testCreateRunnableBufferPoolMetricsCollectorNullToDefault() {
         createJvmMetricsRunnableBuilder().setBufferPoolMetricsCollector(null).build();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCreateRunnableFileDescriptorMetricsCollectorNullCase() {
+    @Test
+    public void testCreateRunnableFileDescriptorMetricsCollectorNullToDefault() {
         createJvmMetricsRunnableBuilder().setFileDescriptorMetricsCollector(null).build();
     }
 
@@ -324,49 +326,49 @@ public final class JvmMetricsRunnableTest {
     @Test
     public void testRunWithExceptionOnGcCollect() {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder().build();
-        Mockito.doThrow(Exception.class).when(_gcCollector).collect(_metrics, _managementFactory);
+        Mockito.doThrow(RuntimeException.class).when(_gcCollector).collect(_metrics, _managementFactory);
         runnable.run();
     }
 
     @Test
     public void testRunWithExceptionOnHeapMemoryCollect() {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder().build();
-        Mockito.doThrow(Exception.class).when(_heapMemoryCollector).collect(_metrics, _managementFactory);
+        Mockito.doThrow(RuntimeException.class).when(_heapMemoryCollector).collect(_metrics, _managementFactory);
         runnable.run();
     }
 
     @Test
     public void testRunWithExceptionOnNonHeapMemoryCollect() {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder().build();
-        Mockito.doThrow(Exception.class).when(_nonHeapMemoryCollector).collect(_metrics, _managementFactory);
+        Mockito.doThrow(RuntimeException.class).when(_nonHeapMemoryCollector).collect(_metrics, _managementFactory);
         runnable.run();
     }
 
     @Test
     public void testRunWithExceptionOnPoolMemoryCollect() {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder().build();
-        Mockito.doThrow(Exception.class).when(_poolMemoryCollector).collect(_metrics, _managementFactory);
+        Mockito.doThrow(RuntimeException.class).when(_poolMemoryCollector).collect(_metrics, _managementFactory);
         runnable.run();
     }
 
     @Test
     public void testRunWithExceptionOnBufferPoolCollect() {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder().build();
-        Mockito.doThrow(Exception.class).when(_bufferPoolCollector).collect(_metrics, _managementFactory);
+        Mockito.doThrow(RuntimeException.class).when(_bufferPoolCollector).collect(_metrics, _managementFactory);
         runnable.run();
     }
 
     @Test
     public void testRunWithExceptionOnFileDescriptorCollect() {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder().build();
-        Mockito.doThrow(Exception.class).when(_fileDescriptorCollector).collect(_metrics, _managementFactory);
+        Mockito.doThrow(RuntimeException.class).when(_fileDescriptorCollector).collect(_metrics, _managementFactory);
         runnable.run();
     }
 
     @Test
     public void testRunWithExceptionThrownWithSwallowExceptionEnabled() {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder().setSwallowException(true).build();
-        Mockito.doThrow(Exception.class).when(_threadCollector).collect(_metrics, _managementFactory);
+        Mockito.doThrow(RuntimeException.class).when(_threadCollector).collect(_metrics, _managementFactory);
         runnable.run();
     }
 
@@ -393,7 +395,7 @@ public final class JvmMetricsRunnableTest {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder()
                 .setSwallowException(true)
                 .build();
-        Mockito.doThrow(Exception.class).when(_metricsFactory).create();
+        Mockito.doThrow(RuntimeException.class).when(_metricsFactory).create();
         runnable.run();
     }
 
