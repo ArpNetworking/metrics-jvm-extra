@@ -84,9 +84,6 @@
     <mockito.version>2.23.4</mockito.version>
     <slf4j.version>1.7.25</slf4j.version>
 
-    <!-- Findbugs -->
-    <!--<findbugs.exclude>${project.basedir}/findbugs.exclude.xml</findbugs.exclude>
-    -->
     <!-- Code Coverage -->
     <jacoco.check.line.coverage>1.0</jacoco.check.line.coverage>
     <jacoco.check.branch.coverage>1.0</jacoco.check.branch.coverage>
