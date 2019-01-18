@@ -28,7 +28,7 @@
   <packaging>jar</packaging>
   <name>Jvm Extra</name>
   <description>Extension to metrics-java-client for collecting JVM metrics.</description>
-  <version>0.10.1-SNAPSHOT</version>
+  <version>0.10.1</version>
 
   <licenses>
     <license>
@@ -71,7 +71,7 @@
     <connection>scm:git:git@github.com:arpnetworking/metrics-jvm-extra.git</connection>
     <developerConnection>scm:git:git@github.com:arpnetworking/metrics-jvm-extra.git</developerConnection>
     <url>https://github.com/arpnetworking/metrics-jvm-extra</url>
-    <tag>HEAD</tag>
+    <tag>jvm-extra-0.10.1</tag>
   </scm>
 
   <properties>
