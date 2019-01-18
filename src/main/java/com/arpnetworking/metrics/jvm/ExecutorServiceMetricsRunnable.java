@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2017 Inscope Metrics Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -200,10 +200,12 @@ public class ExecutorServiceMetricsRunnable extends AbstractMetricsRunnable {
                 throw new IllegalArgumentException("MetricsFactory cannot be null.");
             }
             if (_swallowException == null) {
-                throw new IllegalArgumentException("SwallowException cannot be null.");
+                _swallowException = DEFAULT_SWALLOW_EXCEPTION;
+                LOGGER.info(String.format("Defaulted null swallow exception; swallowException=%s", _swallowException));
             }
             if (_executorServices == null) {
-                throw new IllegalArgumentException("ExecutorServices cannot be null.");
+                _executorServices = DEFAULT_EXECUTOR_SERVICES;
+                LOGGER.info(String.format("Defaulted null executor services; executorServices=%s", _executorServices));
             }
             for (final ExecutorService executorService : _executorServices.values()) {
                 // NOTE: That a ScheduledThreadPoolExecutor is a ThreadPoolExecutor
@@ -252,13 +254,16 @@ public class ExecutorServiceMetricsRunnable extends AbstractMetricsRunnable {
          */
         public Builder setExecutorServices(final Map<String, ExecutorService> value) {
             // CHECKSTYLE.OFF: IllegalInstantiation - No Guava here
-            _executorServices = Collections.unmodifiableMap(new HashMap<>(value));
+            _executorServices = value == null ? null : Collections.unmodifiableMap(new HashMap<>(value));
             // CHECKSTYLE.ON: IllegalInstantiation
             return this;
         }
 
         private MetricsFactory _metricsFactory;
-        private Boolean _swallowException = true;
-        private Map<String, ExecutorService> _executorServices;
+        private Boolean _swallowException = DEFAULT_SWALLOW_EXCEPTION;
+        private Map<String, ExecutorService> _executorServices = DEFAULT_EXECUTOR_SERVICES;
+
+        private static final Boolean DEFAULT_SWALLOW_EXCEPTION = true;
+        private static final Map<String, ExecutorService> DEFAULT_EXECUTOR_SERVICES = Collections.emptyMap();
     }
 }

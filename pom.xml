@@ -18,7 +18,7 @@
   <parent>
     <groupId>com.arpnetworking.build</groupId>
     <artifactId>arpnetworking-parent-pom</artifactId>
-    <version>1.1.4</version>
+    <version>1.1.10</version>
     <relativePath />
   </parent>
 
@@ -76,13 +76,13 @@
 
   <properties>
     <!--Dependency versions-->
+    <arpnetworking.commons.version>1.18.0</arpnetworking.commons.version>
     <junit.version>4.12</junit.version>
-    <metrics.client.version>0.10.0</metrics.client.version>
-    <mockito.version>2.7.0</mockito.version>
+    <findbugs.annotations.version>3.0.1</findbugs.annotations.version>
+    <jsr305.version>3.0.2</jsr305.version>
+    <metrics.client.version>0.10.1</metrics.client.version>
+    <mockito.version>2.23.4</mockito.version>
     <slf4j.version>1.7.25</slf4j.version>
-
-    <!-- Findbugs -->
-    <findbugs.exclude>${project.basedir}/findbugs.exclude.xml</findbugs.exclude>
 
     <!-- Code Coverage -->
     <jacoco.check.line.coverage>1.0</jacoco.check.line.coverage>
@@ -134,6 +134,22 @@
       <groupId>com.arpnetworking.metrics</groupId>
       <artifactId>metrics-client</artifactId>
       <version>${metrics.client.version}</version>
+    </dependency>
+    <!-- General -->
+    <dependency>
+      <groupId>com.arpnetworking.commons</groupId>
+      <artifactId>commons</artifactId>
+      <version>${arpnetworking.commons.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>${jsr305.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>findbugs-annotations</artifactId>
+      <version>${findbugs.annotations.version}</version>
     </dependency>
     <!-- Test - General -->
     <dependency>

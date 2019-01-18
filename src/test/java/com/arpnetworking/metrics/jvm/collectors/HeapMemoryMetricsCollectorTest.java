@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2015 Groupon.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -92,7 +92,7 @@ public final class HeapMemoryMetricsCollectorTest {
 
     @Test
     public void testCollectWithExceptionOnGetMemoryUsage() {
-        Mockito.doThrow(Exception.class).when(_memoryMXBean).getHeapMemoryUsage();
+        Mockito.doThrow(RuntimeException.class).when(_memoryMXBean).getHeapMemoryUsage();
         Mockito.verifyNoMoreInteractions(_metrics);
     }
 
