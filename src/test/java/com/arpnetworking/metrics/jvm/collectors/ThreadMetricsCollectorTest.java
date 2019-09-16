@@ -25,7 +25,7 @@ import org.mockito.Mockito;
 import java.lang.management.ThreadMXBean;
 
 /**
- * Tests the <code>ThreadMetricsCollector</code>.
+ * Tests the {@link ThreadMetricsCollector}.
  *
  * @author Deepika Misra (deepika at groupon dot com)
  */

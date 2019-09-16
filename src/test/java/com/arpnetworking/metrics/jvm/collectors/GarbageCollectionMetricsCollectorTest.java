@@ -17,7 +17,6 @@
 package com.arpnetworking.metrics.jvm.collectors;
 
 import com.arpnetworking.metrics.Metrics;
-import com.arpnetworking.metrics.Units;
 import com.arpnetworking.metrics.jvm.ManagementFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -29,7 +28,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * Tests the <code>GarbageCollectionMetricsCollector</code> class.
+ * Tests the {@link GarbageCollectionMetricsCollector} class.
  *
  * @author Deepika Misra (deepika at groupon dot com)
  */
@@ -64,7 +63,7 @@ public final class GarbageCollectionMetricsCollectorTest {
         Mockito.doReturn(Collections.singletonList(_gcBean1)).when(_managementFactory).getGarbageCollectorMXBeans();
         GarbageCollectionMetricsCollector.newInstance().collect(_metrics, _managementFactory);
         Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_count", 5L);
-        Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_time", 100L, Units.MILLISECOND);
+        Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_time", 100L);
         Mockito.verify(_metrics, Mockito.never())
                 .incrementCounter(Mockito.eq("jvm/garbage_collector/my_bean/collection_count_delta"), Mockito.anyLong());
     }
@@ -76,11 +75,11 @@ public final class GarbageCollectionMetricsCollectorTest {
         Mockito.doReturn(Arrays.asList(_gcBean1, _gcBean2)).when(_managementFactory).getGarbageCollectorMXBeans();
         GarbageCollectionMetricsCollector.newInstance().collect(_metrics, _managementFactory);
         Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean_1/collection_count", 5L);
-        Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean_1/collection_time", 100L, Units.MILLISECOND);
+        Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean_1/collection_time", 100L);
         Mockito.verify(_metrics, Mockito.never())
                 .incrementCounter(Mockito.eq("jvm/garbage_collector/my_bean_1/collection_count_delta"), Mockito.anyLong());
         Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean_2/collection_count", 10L);
-        Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean_2/collection_time", 400L, Units.MILLISECOND);
+        Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean_2/collection_time", 400L);
         Mockito.verify(_metrics, Mockito.never())
                 .incrementCounter(Mockito.eq("jvm/garbage_collector/my_bean_2/collection_count_delta"), Mockito.anyLong());
     }
@@ -110,7 +109,7 @@ public final class GarbageCollectionMetricsCollectorTest {
         GarbageCollectionMetricsCollector.newInstance().collect(_metrics, _managementFactory);
         Mockito.verify(_metrics, Mockito.never())
                 .setGauge(Mockito.eq("jvm/garbage_collector/my_bean/collection_count"), Mockito.anyLong());
-        Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_time", 100L, Units.MILLISECOND);
+        Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_time", 100L);
         Mockito.verify(_metrics, Mockito.never())
                 .incrementCounter(Mockito.eq("jvm/garbage_collector/my_bean/collection_count_delta"), Mockito.anyLong());
     }
@@ -124,8 +123,7 @@ public final class GarbageCollectionMetricsCollectorTest {
         Mockito.verify(_metrics, Mockito.never())
                 .setGauge(
                         Mockito.eq("jvm/garbage_collector/my_bean/collection_time"),
-                        Mockito.anyLong(),
-                        Mockito.eq(Units.MILLISECOND));
+                        Mockito.anyLong());
         Mockito.verify(_metrics, Mockito.never())
                 .incrementCounter(Mockito.eq("jvm/garbage_collector/my_bean/collection_count_delta"), Mockito.anyLong());
     }
@@ -138,13 +136,13 @@ public final class GarbageCollectionMetricsCollectorTest {
                 (GarbageCollectionMetricsCollector) GarbageCollectionMetricsCollector.newInstance();
         collector.collect(_metrics, _managementFactory);
         Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_count", 5L);
-        Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_time", 10L, Units.MILLISECOND);
+        Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_time", 10L);
         Mockito.verify(_metrics, Mockito.never())
                 .setGauge(Mockito.eq("jvm/garbage_collector/my_bean/collection_count_delta"), Mockito.anyLong());
         createMockBean(_gcBean1, "My Bean", 7L, 12L);
         collector.collect(_metrics, _managementFactory);
         Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_count", 7L);
-        Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_time", 12L, Units.MILLISECOND);
+        Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_time", 12L);
         Mockito.verify(_metrics).incrementCounter("jvm/garbage_collector/my_bean/collection_count_delta", 2L);
     }
 
@@ -160,7 +158,7 @@ public final class GarbageCollectionMetricsCollectorTest {
         Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_count", 3L);
         Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_count", 5L);
         Mockito.verify(_metrics, Mockito.times(2))
-                .setGauge("jvm/garbage_collector/my_bean/collection_time", 10L, Units.MILLISECOND);
+                .setGauge("jvm/garbage_collector/my_bean/collection_time", 10L);
         Mockito.verify(_metrics).incrementCounter("jvm/garbage_collector/my_bean/collection_count_delta", 2L);
     }
 
@@ -175,7 +173,7 @@ public final class GarbageCollectionMetricsCollectorTest {
         collector.collect(_metrics, _managementFactory);
         Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_count", 5L);
         Mockito.verify(_metrics, Mockito.times(2))
-                .setGauge("jvm/garbage_collector/my_bean/collection_time", 10L, Units.MILLISECOND);
+                .setGauge("jvm/garbage_collector/my_bean/collection_time", 10L);
         Mockito.verify(_metrics, Mockito.never())
                 .incrementCounter(Mockito.eq("jvm/garbage_collector/my_bean/collection_count_delta"), Mockito.anyLong());
     }
@@ -191,7 +189,7 @@ public final class GarbageCollectionMetricsCollectorTest {
         collector.collect(_metrics, _managementFactory);
         Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_count", 3L);
         Mockito.verify(_metrics, Mockito.times(2))
-                .setGauge("jvm/garbage_collector/my_bean/collection_time", 10L, Units.MILLISECOND);
+                .setGauge("jvm/garbage_collector/my_bean/collection_time", 10L);
         Mockito.verify(_metrics, Mockito.never())
                 .incrementCounter(Mockito.eq("jvm/garbage_collector/my_bean/collection_count_delta"), Mockito.anyLong());
     }
@@ -204,7 +202,7 @@ public final class GarbageCollectionMetricsCollectorTest {
                 (GarbageCollectionMetricsCollector) GarbageCollectionMetricsCollector.newInstance();
         collector.collect(_metrics, _managementFactory);
         Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_count", 5L);
-        Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_time", 10L, Units.MILLISECOND);
+        Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_time", 10L);
         Mockito.verify(_metrics, Mockito.never())
                 .incrementCounter(Mockito.eq("jvm/garbage_collector/my_bean/collection_count_delta"), Mockito.anyLong());
     }
@@ -221,7 +219,7 @@ public final class GarbageCollectionMetricsCollectorTest {
         Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_count", 7L);
         Mockito.verify(_metrics).setGauge("jvm/garbage_collector/my_bean/collection_count", 5L);
         Mockito.verify(_metrics, Mockito.times(2))
-                .setGauge("jvm/garbage_collector/my_bean/collection_time", 10L, Units.MILLISECOND);
+                .setGauge("jvm/garbage_collector/my_bean/collection_time", 10L);
         Mockito.verify(_metrics).incrementCounter("jvm/garbage_collector/my_bean/collection_count_delta", -2L);
     }
 

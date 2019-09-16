@@ -26,7 +26,7 @@ import org.mockito.Mockito;
 import java.lang.management.OperatingSystemMXBean;
 
 /**
- * Tests <code>FileDescriptorMetricsCollector</code>.
+ * Tests {@link FileDescriptorMetricsCollector}.
  *
  * @author Deepika Misra (deepika at groupon dot com)
  */

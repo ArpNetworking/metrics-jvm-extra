@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An implementation of <code>Runnable</code> that collects all JVM metrics
+ * An implementation of {@link Runnable} that collects all JVM metrics
  * each time its run.
  *
  * @author Deepika Misra (deepika at groupon dot com)
@@ -62,9 +62,6 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         if (builder._collectHeapMemoryMetrics) {
             _collectorsEnabled.add(builder._heapMemoryMetricsCollector);
         }
-        if (builder._collectNonHeapMemoryMetrics) {
-            _collectorsEnabled.add(builder._nonHeapMemoryMetricsCollector);
-        }
         if (builder._collectPoolMemoryMetrics) {
             _collectorsEnabled.add(builder._poolMemoryMetricsCollector);
         }
@@ -85,7 +82,7 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(JvmMetricsRunnable.class);
 
     /**
-     * Builder for <code>JvmMetricsRunnable</code>.
+     * Builder for {@link JvmMetricsRunnable}.
      *
      * @author Deepika Misra (deepika at groupon dot com)
      */
@@ -94,9 +91,9 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         // CHECKSTYLE.ON: FinalClass
 
         /**
-         * Builds an instance of <code>JvmMetricsRunnable</code>.
+         * Builds an instance of {@link JvmMetricsRunnable}.
          *
-         * @return An instance of <code>JvmMetricsRunnable</code>.
+         * @return An instance of {@link JvmMetricsRunnable}.
          */
         public JvmMetricsRunnable build() {
             if (_metricsFactory == null) {
@@ -121,12 +118,6 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         }
 
         private void defaultCollection() {
-            if (_collectNonHeapMemoryMetrics == null) {
-                _collectNonHeapMemoryMetrics = DEFAULT_COLLECT_NON_HEAP_MEMORY_METRICS;
-                LOGGER.info(String.format(
-                        "Defaulted null collect non heap memory metrics; collectNonHeapMemoryMetrics=%s",
-                        _collectNonHeapMemoryMetrics));
-            }
             if (_collectPoolMemoryMetrics == null) {
                 _collectPoolMemoryMetrics = DEFAULT_COLLECT_POOL_MEMORY_METRICS;
                 LOGGER.info(String.format(
@@ -166,12 +157,6 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         }
 
         private void defaultCollectors() {
-            if (_nonHeapMemoryMetricsCollector == null) {
-                _nonHeapMemoryMetricsCollector = DEFAULT_HEAP_MEMORY_METRICS_COLLECTOR;
-                LOGGER.info(String.format(
-                        "Defaulted null heap memory metrics collector; nonHeapMemoryMetricsCollector=%s",
-                        _nonHeapMemoryMetricsCollector));
-            }
             if (_poolMemoryMetricsCollector == null) {
                 _poolMemoryMetricsCollector = DEFAULT_POOL_MEMORY_METRICS_COLLECTOR;
                 LOGGER.info(String.format(
@@ -211,10 +196,10 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         }
 
         /**
-         * Set the <code>MetricsFactory</code> instance. Required. Cannot be null.
+         * Set the {@link MetricsFactory} instance. Required. Cannot be null.
          *
-         * @param value The value for the <code>MetricsFactory</code> instance.
-         * @return This <code>Builder</code> instance.
+         * @param value The value for the {@link MetricsFactory} instance.
+         * @return This {@link Builder} instance.
          */
         public Builder setMetricsFactory(final MetricsFactory value) {
             _metricsFactory = value;
@@ -228,8 +213,8 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
          * will be logged and swallowed false indicates it will be rethrown as
          * a {@code RuntimeException}.
          *
-         * @param value The value for the <code>Boolean</code> instance.
-         * @return This <code>Builder</code> instance.
+         * @param value The value for the {@link Boolean} instance.
+         * @return This {@link Builder} instance.
          */
         public Builder setSwallowException(final Boolean value) {
             _swallowException = value;
@@ -241,8 +226,8 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
          * A true value indicates that these metrics need to be collected.
          * Optional. Defaults to true. Cannot be null.
          *
-         * @param value A <code>Boolean</code> value.
-         * @return This <code>Builder</code> instance.
+         * @param value A {@link Boolean} value.
+         * @return This {@link Builder} instance.
          */
         public Builder setCollectHeapMemoryMetrics(final Boolean value) {
             _collectHeapMemoryMetrics = value;
@@ -254,23 +239,8 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
          * collected. A true value indicates that these metrics need to
          * be collected. Optional. Defaults to true. Cannot be null.
          *
-         * @param value A <code>Boolean</code> value.
-         * @return This <code>Builder</code> instance.
-         * @deprecated Use the PoolMemoryMetricsCollector
-         */
-        @Deprecated
-        public Builder setCollectNonHeapMemoryMetrics(final Boolean value) {
-            _collectNonHeapMemoryMetrics = value;
-            return this;
-        }
-
-        /**
-         * Set the flag indicating if Non-Heap Memory metrics should be
-         * collected. A true value indicates that these metrics need to
-         * be collected. Optional. Defaults to true. Cannot be null.
-         *
-         * @param value A <code>Boolean</code> value.
-         * @return This <code>Builder</code> instance.
+         * @param value A {@link Boolean} value.
+         * @return This {@link Builder} instance.
          */
         public Builder setCollectPoolMemoryMetrics(final Boolean value) {
             _collectPoolMemoryMetrics = value;
@@ -282,8 +252,8 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
          * true value indicates that these metrics need to be collected.
          * Optional. Defaults to true. Cannot be null.
          *
-         * @param value A <code>Boolean</code> value.
-         * @return This <code>Builder</code> instance.
+         * @param value A {@link Boolean} value.
+         * @return This {@link Builder} instance.
          */
         public Builder setCollectThreadMetrics(final Boolean value) {
             _collectThreadMetrics = value;
@@ -295,8 +265,8 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
          * collected. A true value indicates that these metrics need to be
          * collected. Optional. Defaults to true. Cannot be null.
          *
-         * @param value A <code>Boolean</code> value.
-         * @return This <code>Builder</code> instance.
+         * @param value A {@link Boolean} value.
+         * @return This {@link Builder} instance.
          */
         public Builder setCollectGarbageCollectionMetrics(final Boolean value) {
             _collectGarbageCollectionMetrics = value;
@@ -308,8 +278,8 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
          * A true value indicates that these metrics need to be collected.
          * Optional. Defaults to true. Cannot be null.
          *
-         * @param value A <code>Boolean</code> value.
-         * @return This <code>Builder</code> instance.
+         * @param value A {@link Boolean} value.
+         * @return This {@link Builder} instance.
          */
         public Builder setCollectBufferPoolMetrics(final Boolean value) {
             _collectBufferPoolMetrics = value;
@@ -321,8 +291,8 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
          * collected. A true value indicates that these metrics need to be
          * collected. Optional. Defaults to true. Cannot be null.
          *
-         * @param value A <code>Boolean</code> value.
-         * @return This <code>Builder</code> instance.
+         * @param value A {@link Boolean} value.
+         * @return This {@link Builder} instance.
          */
         public Builder setCollectFileDescriptorMetrics(final Boolean value) {
             _collectFileDescriptorMetrics = value;
@@ -330,13 +300,13 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         }
 
         /**
-         * Set the <code>ManagementFactory</code> instance. Optional. Defaults
-         * to an instance of <code>ManagementFactoryDefault</code>. Cannot be
+         * Set the {@link ManagementFactory} instance. Optional. Defaults
+         * to an instance of {@link ManagementFactoryDefault}. Cannot be
          * null. This is for testing purposes only and should never be used by
          * clients.
          *
-         * @param value The value for the <code>ManagementFactory</code> instance.
-         * @return This <code>Builder</code> instance.
+         * @param value The value for the {@link ManagementFactory} instance.
+         * @return This {@link Builder} instance.
          */
         /* package private */ Builder setManagementFactory(final ManagementFactory value) {
             _managementFactory = value;
@@ -344,13 +314,13 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         }
 
         /**
-         * Set the <code>HeapMemoryMetricsCollector</code>. Defaults to an
-         * instance of <code>HeapMemoryMetricsCollector</code>. Cannot be null.
+         * Set the {@link HeapMemoryMetricsCollector}. Defaults to an
+         * instance of {@link HeapMemoryMetricsCollector}. Cannot be null.
          * This is for testing purposes only and should never be used by
          * clients.
          *
-         * @param value A <code>HeapMemoryMetricsCollector</code> instance.
-         * @return This <code>Builder</code> instance.
+         * @param value A {@link HeapMemoryMetricsCollector} instance.
+         * @return This {@link Builder} instance.
          */
         /* package private */ Builder setHeapMemoryMetricsCollector(final JvmMetricsCollector value) {
             _heapMemoryMetricsCollector = value;
@@ -358,29 +328,13 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         }
 
         /**
-         * Set the <code>NonHeapMemoryMetricsCollector</code>. Defaults to an
-         * instance of <code>NonHeapMemoryMetricsCollector</code>.  Cannot be
+         * Set the {@link PoolMemoryMetricsCollector}. Defaults to an
+         * instance of {@link PoolMemoryMetricsCollector}.  Cannot be
          * null. This is for testing purposes only and should never be used by
          * clients.
          *
-         * @param value A <code>NonHeapMemoryMetricsCollector</code> instance.
-         * @return This <code>Builder</code> instance.
-         * @deprecated Set the PoolMemoryMetricsCollector instead
-         */
-        @Deprecated
-        /* package private */ Builder setNonHeapMemoryMetricsCollector(final JvmMetricsCollector value) {
-            _nonHeapMemoryMetricsCollector = value;
-            return this;
-        }
-
-        /**
-         * Set the <code>PoolMemoryMetricsCollector</code>. Defaults to an
-         * instance of <code>PoolMemoryMetricsCollector</code>.  Cannot be
-         * null. This is for testing purposes only and should never be used by
-         * clients.
-         *
-         * @param value A <code>PoolMemoryMetricsCollector</code> instance.
-         * @return This <code>Builder</code> instance.
+         * @param value A {@link PoolMemoryMetricsCollector} instance.
+         * @return This {@link Builder} instance.
          */
         /* package private */ Builder setPoolMemoryMetricsCollector(final JvmMetricsCollector value) {
             _poolMemoryMetricsCollector = value;
@@ -388,13 +342,13 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         }
 
         /**
-         * Set the <code>ThreadMetricsCollector</code>. Defaults to an
-         * instance of <code>ThreadMetricsCollector</code>.  Cannot be null.
+         * Set the {@link ThreadMetricsCollector}. Defaults to an
+         * instance of {@link ThreadMetricsCollector}.  Cannot be null.
          * This is for testing purposes only and should never be used by
          * clients.
          *
-         * @param value A <code>ThreadMetricsCollector</code> instance.
-         * @return This <code>Builder</code> instance.
+         * @param value A {@link ThreadMetricsCollector} instance.
+         * @return This {@link Builder} instance.
          */
         /* package private */ Builder setThreadMetricsCollector(final JvmMetricsCollector value) {
             _threadMetricsCollector = value;
@@ -402,13 +356,13 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         }
 
         /**
-         * Set the <code>GarbageCollectionMetricsCollector</code>. Defaults to
-         * an instance of <code>GarbageCollectionMetricsCollector</code>.
+         * Set the {@link GarbageCollectionMetricsCollector}. Defaults to
+         * an instance of {@link GarbageCollectionMetricsCollector}.
          * Cannot be null. This is for testing purposes only and should never
          * be used by clients.
          *
-         * @param value A <code>GarbageCollectionMetricsCollector</code> instance.
-         * @return This <code>Builder</code> instance.
+         * @param value A {@link GarbageCollectionMetricsCollector} instance.
+         * @return This {@link Builder} instance.
          */
         /* package private */ Builder setGarbageCollectionMetricsCollector(final JvmMetricsCollector value) {
             _garbageCollectionMetricsCollector = value;
@@ -416,13 +370,13 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         }
 
         /**
-         * Set the <code>BufferPoolMetricsCollector</code>. Defaults to an
-         * instance of <code>BufferPoolMetricsCollector</code>.  Cannot be
+         * Set the {@link BufferPoolMetricsCollector}. Defaults to an
+         * instance of {@link BufferPoolMetricsCollector}.  Cannot be
          * null. This is for testing purposes only and should never be used by
          * clients.
          *
-         * @param value A <code>BufferPoolMetricsCollector</code> instance.
-         * @return This <code>Builder</code> instance.
+         * @param value A {@link BufferPoolMetricsCollector} instance.
+         * @return This {@link Builder} instance.
          */
         /* package private */ Builder setBufferPoolMetricsCollector(final JvmMetricsCollector value) {
             _bufferPoolMetricsCollector = value;
@@ -430,13 +384,13 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         }
 
         /**
-         * Set the <code>FileDescriptorMetricsCollector</code>. Defaults to
-         * an instance of <code>FileDescriptorMetricsCollector</code>. Cannot
+         * Set the {@link FileDescriptorMetricsCollector}. Defaults to
+         * an instance of {@link FileDescriptorMetricsCollector}. Cannot
          * be null. This is for testing purposes only and should never be used
          * by clients.
          *
-         * @param value A <code>FileDescriptorMetricsCollector</code> instance.
-         * @return This <code>Builder</code> instance.
+         * @param value A {@link FileDescriptorMetricsCollector} instance.
+         * @return This {@link Builder} instance.
          */
         /* package private */ Builder setFileDescriptorMetricsCollector(final JvmMetricsCollector value) {
             _fileDescriptorMetricsCollector = value;
@@ -446,7 +400,6 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         private MetricsFactory _metricsFactory;
         private ManagementFactory _managementFactory = DEFAULT_MANAGEMENT_FACTORY;
         private Boolean _swallowException = DEFAULT_SWALLOW_EXCEPTION;
-        private Boolean _collectNonHeapMemoryMetrics = DEFAULT_COLLECT_NON_HEAP_MEMORY_METRICS;
         private Boolean _collectPoolMemoryMetrics = DEFAULT_COLLECT_POOL_MEMORY_METRICS;
         private Boolean _collectHeapMemoryMetrics = DEFAULT_COLLECT_HEAP_MEMORY_METRICS;
         private Boolean _collectThreadMetrics = DEFAULT_COLLECT_THREAD_METRICS;
@@ -459,11 +412,9 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
         private JvmMetricsCollector _garbageCollectionMetricsCollector = DEFAULT_GC_METRICS_COLLECTOR;
         private JvmMetricsCollector _bufferPoolMetricsCollector = DEFAULT_BUFFER_POOL_METRICS_COLLECTOR;
         private JvmMetricsCollector _fileDescriptorMetricsCollector = DEFAULT_FILE_DESCRIPTOR_METRICS_COLLECTOR;
-        private JvmMetricsCollector _nonHeapMemoryMetricsCollector = DEFAULT_NON_HEAP_MEMORY_METRICS_COLLECTOR;
 
         private static final ManagementFactory DEFAULT_MANAGEMENT_FACTORY = ManagementFactoryDefault.newInstance();
         private static final Boolean DEFAULT_SWALLOW_EXCEPTION = true;
-        private static final Boolean DEFAULT_COLLECT_NON_HEAP_MEMORY_METRICS = false;
         private static final Boolean DEFAULT_COLLECT_POOL_MEMORY_METRICS = true;
         private static final Boolean DEFAULT_COLLECT_HEAP_MEMORY_METRICS = true;
         private static final Boolean DEFAULT_COLLECT_THREAD_METRICS = true;
@@ -482,14 +433,11 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
                 BufferPoolMetricsCollector.newInstance();
         private static final JvmMetricsCollector DEFAULT_FILE_DESCRIPTOR_METRICS_COLLECTOR =
                 FileDescriptorMetricsCollector.newInstance();
-        @SuppressWarnings("deprecation")
-        private static final JvmMetricsCollector DEFAULT_NON_HEAP_MEMORY_METRICS_COLLECTOR =
-                com.arpnetworking.metrics.jvm.collectors.NonHeapMemoryMetricsCollector.newInstance();
 
     }
 
     /**
-     * An implementation class of <code>ManagementFactory</code> that is to be
+     * An implementation class of {@link ManagementFactory} that is to be
      * used for getting the actual values for jvm metrics from the java
      * management API. This class exists to facilitate testing only and the
      * clients should never have to explicitly instantiate this.
@@ -499,9 +447,9 @@ public class JvmMetricsRunnable extends AbstractMetricsRunnable {
     /* package private */ static final class ManagementFactoryDefault implements ManagementFactory {
 
         /**
-         * Creates a new instance of <code>ManagementFactoryDefault</code>.
+         * Creates a new instance of {@link ManagementFactoryDefault}.
          *
-         * @return An instance of <code>ManagementFactoryDefault</code>
+         * @return An instance of {@link ManagementFactoryDefault}
          */
         /* package private */
         static ManagementFactory newInstance() {

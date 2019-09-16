@@ -16,7 +16,6 @@
 package com.arpnetworking.metrics.jvm.collectors;
 
 import com.arpnetworking.metrics.Metrics;
-import com.arpnetworking.metrics.Units;
 import com.arpnetworking.metrics.jvm.ManagementFactory;
 
 import java.lang.management.BufferPoolMXBean;
@@ -32,9 +31,9 @@ public class BufferPoolMetricsCollector implements JvmMetricsCollector{
 // CHECKSTYLE.ON: FinalClass
 
     /**
-     * Creates a new instance of <code>JvmMetricsCollector</code>.
+     * Creates a new instance of {@link JvmMetricsCollector}.
      *
-     * @return An instance of <code>JvmMetricsCollector</code>
+     * @return An instance of {@link JvmMetricsCollector}
      */
     public static JvmMetricsCollector newInstance() {
         return new BufferPoolMetricsCollector();
@@ -60,8 +59,7 @@ public class BufferPoolMetricsCollector implements JvmMetricsCollector{
                             BUFFER_POOL,
                             MetricsUtil.convertToSnakeCase(pool.getName()),
                             TOTAL_CAPACITY),
-                    pool.getTotalCapacity(),
-                    Units.BYTE
+                    pool.getTotalCapacity()
             );
             final long memoryUsed = pool.getMemoryUsed();
             if (memoryUsed != -1) {
@@ -72,8 +70,7 @@ public class BufferPoolMetricsCollector implements JvmMetricsCollector{
                                 BUFFER_POOL,
                                 MetricsUtil.convertToSnakeCase(pool.getName()),
                                 MEMORY_USED),
-                        memoryUsed,
-                        Units.BYTE
+                        memoryUsed
                 );
             }
         }

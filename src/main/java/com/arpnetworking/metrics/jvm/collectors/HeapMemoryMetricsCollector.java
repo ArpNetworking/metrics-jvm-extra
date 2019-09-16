@@ -16,7 +16,6 @@
 package com.arpnetworking.metrics.jvm.collectors;
 
 import com.arpnetworking.metrics.Metrics;
-import com.arpnetworking.metrics.Units;
 import com.arpnetworking.metrics.jvm.ManagementFactory;
 
 import java.lang.management.MemoryUsage;
@@ -30,9 +29,9 @@ import java.lang.management.MemoryUsage;
 public class HeapMemoryMetricsCollector implements JvmMetricsCollector {
 // CHECKSTYLE.ON: FinalClass
     /**
-     * Creates a new instance of <code>JvmMetricsCollector</code>.
+     * Creates a new instance of {@link JvmMetricsCollector}.
      *
-     * @return An instance of <code>JvmMetricsCollector</code>
+     * @return An instance of {@link JvmMetricsCollector}
      */
     public static JvmMetricsCollector newInstance() {
         return new HeapMemoryMetricsCollector();
@@ -41,12 +40,12 @@ public class HeapMemoryMetricsCollector implements JvmMetricsCollector {
     @Override
     public void collect(final Metrics metrics, final ManagementFactory managementFactory) {
         final MemoryUsage heapUsage = managementFactory.getMemoryMXBean().getHeapMemoryUsage();
-        metrics.setGauge(HEAP_USED, heapUsage.getUsed(), Units.BYTE);
+        metrics.setGauge(HEAP_USED, heapUsage.getUsed());
         // Heap max may be -1 if undefined
         // http://docs.oracle.com/javase/8/docs/api/java/lang/management/MemoryUsage.html#getMax--
         final long heapMax = heapUsage.getMax();
         if (heapMax != -1) {
-            metrics.setGauge(HEAP_MAX, heapMax, Units.BYTE);
+            metrics.setGauge(HEAP_MAX, heapMax);
         }
     }
 

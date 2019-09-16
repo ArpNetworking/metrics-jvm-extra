@@ -28,11 +28,10 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 /**
- * Tests the <code>JvmMetricsRunnable</code> class.
+ * Tests the {@link JvmMetricsRunnable} class.
  *
  * @author Deepika Misra (deepika at groupon dot com)
  */
-@SuppressWarnings("deprecation")
 @SuppressFBWarnings("NP_NONNULL_PARAM_VIOLATION")
 public final class JvmMetricsRunnableTest {
 
@@ -43,7 +42,6 @@ public final class JvmMetricsRunnableTest {
         _managementFactory = Mockito.mock(ManagementFactory.class);
         _gcCollector = Mockito.mock(JvmMetricsCollector.class);
         _heapMemoryCollector = Mockito.mock(JvmMetricsCollector.class);
-        _nonHeapMemoryCollector = Mockito.mock(JvmMetricsCollector.class);
         _poolMemoryCollector = Mockito.mock(JvmMetricsCollector.class);
         _threadCollector = Mockito.mock(JvmMetricsCollector.class);
         _bufferPoolCollector = Mockito.mock(BufferPoolMetricsCollector.class);
@@ -55,7 +53,6 @@ public final class JvmMetricsRunnableTest {
     public void tearDown() {
         _gcCollector = null;
         _heapMemoryCollector = null;
-        _nonHeapMemoryCollector = null;
         _threadCollector = null;
         _bufferPoolCollector = null;
         _fileDescriptorCollector = null;
@@ -75,11 +72,6 @@ public final class JvmMetricsRunnableTest {
     @Test
     public void testCreateRunnableCollectHeapMemoryMetricsNullToDefault() {
         createJvmMetricsRunnableBuilder().setCollectHeapMemoryMetrics(null).build();
-    }
-
-    @Test
-    public void testCreateRunnableCollectNonHeapMemoryMetricsNullToDefault() {
-        createJvmMetricsRunnableBuilder().setCollectNonHeapMemoryMetrics(null).build();
     }
 
     @Test
@@ -110,11 +102,6 @@ public final class JvmMetricsRunnableTest {
     @Test
     public void testCreateRunnableManagementFactoryNullToDefault() {
         createJvmMetricsRunnableBuilder().setManagementFactory(null).build();
-    }
-
-    @Test
-    public void testCreateRunnableNonHeapMemoryMetricsCollectorNullToDefault() {
-        createJvmMetricsRunnableBuilder().setNonHeapMemoryMetricsCollector(null).build();
     }
 
     @Test
@@ -157,7 +144,6 @@ public final class JvmMetricsRunnableTest {
         Mockito.verify(_threadCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
         Mockito.verify(_bufferPoolCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
         Mockito.verify(_fileDescriptorCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
-        Mockito.verifyZeroInteractions(_nonHeapMemoryCollector);
     }
 
     @Test
@@ -165,7 +151,6 @@ public final class JvmMetricsRunnableTest {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder()
                 .setCollectGarbageCollectionMetrics(false)
                 .setCollectHeapMemoryMetrics(false)
-                .setCollectNonHeapMemoryMetrics(false)
                 .setCollectPoolMemoryMetrics(false)
                 .setCollectThreadMetrics(false)
                 .setCollectBufferPoolMetrics(false)
@@ -174,7 +159,6 @@ public final class JvmMetricsRunnableTest {
         runnable.run();
         Mockito.verifyZeroInteractions(_gcCollector);
         Mockito.verifyZeroInteractions(_heapMemoryCollector);
-        Mockito.verifyZeroInteractions(_nonHeapMemoryCollector);
         Mockito.verifyZeroInteractions(_poolMemoryCollector);
         Mockito.verifyZeroInteractions(_threadCollector);
         Mockito.verifyZeroInteractions(_bufferPoolCollector);
@@ -185,7 +169,6 @@ public final class JvmMetricsRunnableTest {
     public void testRunOnlyGcCollectorEnabled() {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder()
                 .setCollectHeapMemoryMetrics(false)
-                .setCollectNonHeapMemoryMetrics(false)
                 .setCollectPoolMemoryMetrics(false)
                 .setCollectThreadMetrics(false)
                 .setCollectBufferPoolMetrics(false)
@@ -194,7 +177,6 @@ public final class JvmMetricsRunnableTest {
         runnable.run();
         Mockito.verify(_gcCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
         Mockito.verifyZeroInteractions(_heapMemoryCollector);
-        Mockito.verifyZeroInteractions(_nonHeapMemoryCollector);
         Mockito.verifyZeroInteractions(_poolMemoryCollector);
         Mockito.verifyZeroInteractions(_threadCollector);
         Mockito.verifyZeroInteractions(_bufferPoolCollector);
@@ -205,7 +187,6 @@ public final class JvmMetricsRunnableTest {
     public void testRunOnlyHeapMemoryCollectorEnabled() {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder()
                 .setCollectGarbageCollectionMetrics(false)
-                .setCollectNonHeapMemoryMetrics(false)
                 .setCollectPoolMemoryMetrics(false)
                 .setCollectThreadMetrics(false)
                 .setCollectBufferPoolMetrics(false)
@@ -214,28 +195,6 @@ public final class JvmMetricsRunnableTest {
         runnable.run();
         Mockito.verifyZeroInteractions(_gcCollector);
         Mockito.verify(_heapMemoryCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
-        Mockito.verifyZeroInteractions(_nonHeapMemoryCollector);
-        Mockito.verifyZeroInteractions(_poolMemoryCollector);
-        Mockito.verifyZeroInteractions(_threadCollector);
-        Mockito.verifyZeroInteractions(_bufferPoolCollector);
-        Mockito.verifyZeroInteractions(_fileDescriptorCollector);
-    }
-
-    @Test
-    public void testRunOnlyNonHeapMemoryCollectorEnabled() {
-        final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder()
-                .setCollectGarbageCollectionMetrics(false)
-                .setCollectNonHeapMemoryMetrics(true)
-                .setCollectPoolMemoryMetrics(false)
-                .setCollectHeapMemoryMetrics(false)
-                .setCollectThreadMetrics(false)
-                .setCollectBufferPoolMetrics(false)
-                .setCollectFileDescriptorMetrics(false)
-                .build();
-        runnable.run();
-        Mockito.verifyZeroInteractions(_gcCollector);
-        Mockito.verifyZeroInteractions(_heapMemoryCollector);
-        Mockito.verify(_nonHeapMemoryCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
         Mockito.verifyZeroInteractions(_poolMemoryCollector);
         Mockito.verifyZeroInteractions(_threadCollector);
         Mockito.verifyZeroInteractions(_bufferPoolCollector);
@@ -246,7 +205,6 @@ public final class JvmMetricsRunnableTest {
     public void testRunOnlyPoolMemoryCollectorEnabled() {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder()
                 .setCollectGarbageCollectionMetrics(false)
-                .setCollectNonHeapMemoryMetrics(false)
                 .setCollectPoolMemoryMetrics(true)
                 .setCollectHeapMemoryMetrics(false)
                 .setCollectThreadMetrics(false)
@@ -256,7 +214,6 @@ public final class JvmMetricsRunnableTest {
         runnable.run();
         Mockito.verifyZeroInteractions(_gcCollector);
         Mockito.verifyZeroInteractions(_heapMemoryCollector);
-        Mockito.verifyZeroInteractions(_nonHeapMemoryCollector);
         Mockito.verify(_poolMemoryCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
         Mockito.verifyZeroInteractions(_threadCollector);
         Mockito.verifyZeroInteractions(_bufferPoolCollector);
@@ -268,7 +225,6 @@ public final class JvmMetricsRunnableTest {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder()
                 .setCollectGarbageCollectionMetrics(false)
                 .setCollectHeapMemoryMetrics(false)
-                .setCollectNonHeapMemoryMetrics(false)
                 .setCollectPoolMemoryMetrics(false)
                 .setCollectBufferPoolMetrics(false)
                 .setCollectFileDescriptorMetrics(false)
@@ -276,7 +232,6 @@ public final class JvmMetricsRunnableTest {
         runnable.run();
         Mockito.verifyZeroInteractions(_gcCollector);
         Mockito.verifyZeroInteractions(_heapMemoryCollector);
-        Mockito.verifyZeroInteractions(_nonHeapMemoryCollector);
         Mockito.verifyZeroInteractions(_poolMemoryCollector);
         Mockito.verify(_threadCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
         Mockito.verifyZeroInteractions(_bufferPoolCollector);
@@ -288,7 +243,6 @@ public final class JvmMetricsRunnableTest {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder()
                 .setCollectGarbageCollectionMetrics(false)
                 .setCollectHeapMemoryMetrics(false)
-                .setCollectNonHeapMemoryMetrics(false)
                 .setCollectPoolMemoryMetrics(false)
                 .setCollectThreadMetrics(false)
                 .setCollectFileDescriptorMetrics(false)
@@ -296,7 +250,6 @@ public final class JvmMetricsRunnableTest {
         runnable.run();
         Mockito.verifyZeroInteractions(_gcCollector);
         Mockito.verifyZeroInteractions(_heapMemoryCollector);
-        Mockito.verifyZeroInteractions(_nonHeapMemoryCollector);
         Mockito.verifyZeroInteractions(_poolMemoryCollector);
         Mockito.verifyZeroInteractions(_threadCollector);
         Mockito.verify(_bufferPoolCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
@@ -308,7 +261,6 @@ public final class JvmMetricsRunnableTest {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder()
                 .setCollectGarbageCollectionMetrics(false)
                 .setCollectHeapMemoryMetrics(false)
-                .setCollectNonHeapMemoryMetrics(false)
                 .setCollectPoolMemoryMetrics(false)
                 .setCollectThreadMetrics(false)
                 .setCollectBufferPoolMetrics(false)
@@ -316,7 +268,6 @@ public final class JvmMetricsRunnableTest {
         runnable.run();
         Mockito.verifyZeroInteractions(_gcCollector);
         Mockito.verifyZeroInteractions(_heapMemoryCollector);
-        Mockito.verifyZeroInteractions(_nonHeapMemoryCollector);
         Mockito.verifyZeroInteractions(_poolMemoryCollector);
         Mockito.verifyZeroInteractions(_threadCollector);
         Mockito.verifyZeroInteractions(_bufferPoolCollector);
@@ -334,13 +285,6 @@ public final class JvmMetricsRunnableTest {
     public void testRunWithExceptionOnHeapMemoryCollect() {
         final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder().build();
         Mockito.doThrow(RuntimeException.class).when(_heapMemoryCollector).collect(_metrics, _managementFactory);
-        runnable.run();
-    }
-
-    @Test
-    public void testRunWithExceptionOnNonHeapMemoryCollect() {
-        final JvmMetricsRunnable runnable = createJvmMetricsRunnableBuilder().build();
-        Mockito.doThrow(RuntimeException.class).when(_nonHeapMemoryCollector).collect(_metrics, _managementFactory);
         runnable.run();
     }
 
@@ -454,7 +398,6 @@ public final class JvmMetricsRunnableTest {
                 .setManagementFactory(_managementFactory)
                 .setGarbageCollectionMetricsCollector(_gcCollector)
                 .setHeapMemoryMetricsCollector(_heapMemoryCollector)
-                .setNonHeapMemoryMetricsCollector(_nonHeapMemoryCollector)
                 .setPoolMemoryMetricsCollector(_poolMemoryCollector)
                 .setThreadMetricsCollector(_threadCollector)
                 .setBufferPoolMetricsCollector(_bufferPoolCollector)
@@ -466,7 +409,6 @@ public final class JvmMetricsRunnableTest {
     private ManagementFactory _managementFactory = null;
     private JvmMetricsCollector _gcCollector = null;
     private JvmMetricsCollector _heapMemoryCollector = null;
-    private JvmMetricsCollector _nonHeapMemoryCollector = null;
     private JvmMetricsCollector _poolMemoryCollector = null;
     private JvmMetricsCollector _threadCollector = null;
     private JvmMetricsCollector _bufferPoolCollector = null;

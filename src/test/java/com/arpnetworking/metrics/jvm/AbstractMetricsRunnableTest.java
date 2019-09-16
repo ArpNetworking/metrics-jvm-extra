@@ -25,9 +25,9 @@ import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 
 /**
- * Tests the <code>ExecutorServiceMetricsRunnable</code> class.
+ * Tests the {@link ExecutorServiceMetricsRunnable} class.
  *
- * @author Ville Koskela (ville dot koskela at inscopemetrics dot com)
+ * @author Ville Koskela (ville dot koskela at inscopemetrics dot io)
  */
 public final class AbstractMetricsRunnableTest {
 

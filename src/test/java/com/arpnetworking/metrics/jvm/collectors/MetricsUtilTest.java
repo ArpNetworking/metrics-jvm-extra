@@ -22,7 +22,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 /**
- * Tests the <code>MetricsUtil</code> class.
+ * Tests the {@link MetricsUtil} class.
  *
  * @author Deepika Misra (deepika at groupon dot com)
  */

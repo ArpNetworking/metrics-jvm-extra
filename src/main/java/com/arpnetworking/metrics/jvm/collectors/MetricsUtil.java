@@ -25,7 +25,7 @@ package com.arpnetworking.metrics.jvm.collectors;
     /**
      * Converts blank spaced strings to camel case with upper case.
      *
-     * @param string An instance of <code>String</code> to be converted.
+     * @param string An instance of {@link String} to be converted.
      * @return A camel cased version of the given string.
      */
     /* package private */ static String convertToSnakeCase(final String string) {

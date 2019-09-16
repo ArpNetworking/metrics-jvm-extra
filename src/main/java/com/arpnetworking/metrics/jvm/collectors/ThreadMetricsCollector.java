@@ -29,9 +29,9 @@ import java.lang.management.ThreadMXBean;
 public class ThreadMetricsCollector implements JvmMetricsCollector {
 // CHECKSTYLE.ON: FinalClass
     /**
-     * Creates a new instance of <code>JvmMetricsCollector</code>.
+     * Creates a new instance of {@link JvmMetricsCollector}.
      *
-     * @return An instance of <code>JvmMetricsCollector</code>
+     * @return An instance of {@link JvmMetricsCollector}
      */
     public static JvmMetricsCollector newInstance() {
         return new ThreadMetricsCollector();

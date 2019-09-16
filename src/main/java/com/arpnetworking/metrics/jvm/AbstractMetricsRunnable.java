@@ -24,7 +24,7 @@ import java.util.Optional;
 /**
  * Abstract metrics collection runnable implementation.
  *
- * @author Ville Koskela (ville dot koskela at inscopemetrics dot com)
+ * @author Ville Koskela (ville dot koskela at inscopemetrics dot io)
  */
 public abstract class AbstractMetricsRunnable implements Runnable {
 
@@ -73,7 +73,7 @@ public abstract class AbstractMetricsRunnable implements Runnable {
      * Handles exceptions either by logging and swalling or by rethrowing as
      * {@code RuntimeException} depending on the value of {@code _swallowException}.
      *
-     * @param e An instance of <code>Exception</code>.
+     * @param e An instance of {@link Exception}.
      */
     protected void handleException(final Exception e) {
         if (_swallowException) {
