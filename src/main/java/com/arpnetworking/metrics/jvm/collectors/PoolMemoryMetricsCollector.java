@@ -16,7 +16,6 @@
 package com.arpnetworking.metrics.jvm.collectors;
 
 import com.arpnetworking.metrics.Metrics;
-import com.arpnetworking.metrics.Units;
 import com.arpnetworking.metrics.jvm.ManagementFactory;
 
 import java.lang.management.MemoryPoolMXBean;
@@ -29,15 +28,15 @@ import java.util.List;
  * data.
  *
  * @author Deepika Misra (deepika at groupon dot com)
- * @author Brandon Arp (brandon dot arp at inscopemetrics dot com)
+ * @author Brandon Arp (brandon dot arp at inscopemetrics dot io)
 */
 // CHECKSTYLE.OFF: FinalClass - Allow clients to inherit from this.
 public class PoolMemoryMetricsCollector implements JvmMetricsCollector {
 // CHECKSTYLE.ON: FinalClass
     /**
-     * Creates a new instance of <code>JvmMetricsCollector</code>.
+     * Creates a new instance of {@link JvmMetricsCollector}.
      *
-     * @return An instance of <code>JvmMetricsCollector</code>
+     * @return An instance of {@link JvmMetricsCollector}
      */
     public static JvmMetricsCollector newInstance() {
         return new PoolMemoryMetricsCollector();
@@ -66,8 +65,7 @@ public class PoolMemoryMetricsCollector implements JvmMetricsCollector {
                         memoryTypeSegment(pool.getType()),
                         MetricsUtil.convertToSnakeCase(pool.getName()),
                         MEMORY_USED),
-                usage.getUsed(),
-                Units.BYTE
+                usage.getUsed()
         );
         final long memoryMax = usage.getMax();
         if (memoryMax != -1) {
@@ -78,8 +76,7 @@ public class PoolMemoryMetricsCollector implements JvmMetricsCollector {
                             memoryTypeSegment(pool.getType()),
                             MetricsUtil.convertToSnakeCase(pool.getName()),
                             MEMORY_MAX),
-                    memoryMax,
-                    Units.BYTE
+                    memoryMax
             );
         }
     }

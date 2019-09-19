@@ -27,8 +27,8 @@ public interface JvmMetricsCollector {
     /**
      * Collects JVM metrics and writes to the given metrics instance.
      *
-     * @param metrics An instance of <code>Metrics</code> that the collected metrics will be written to.
-     * @param managementFactory An instance of <code>ManagementFactory</code>.
+     * @param metrics An instance of {@link Metrics} that the collected metrics will be written to.
+     * @param managementFactory An instance of {@link ManagementFactory}.
      */
     void collect(Metrics metrics, ManagementFactory managementFactory);
 

@@ -32,44 +32,44 @@ import java.util.List;
 public interface ManagementFactory {
 
     /**
-     * Gets the <code>List</code> of <code>GarbageCollectorMXBean</code>.
+     * Gets the {@link List} of {@link GarbageCollectorMXBean}.
      *
-     * @return A <code>List</code> of <code>GarbageCollectorMXBean</code>.
+     * @return A {@link List} of {@link GarbageCollectorMXBean}.
      */
     List<GarbageCollectorMXBean> getGarbageCollectorMXBeans();
 
     /**
-     * Gets the <code>MemoryMXBean</code>.
+     * Gets the {@link MemoryMXBean}.
      *
-     * @return An instance of <code>MemoryMXBean</code>.
+     * @return An instance of {@link MemoryMXBean}.
      */
     MemoryMXBean getMemoryMXBean();
 
     /**
-     * Gets the <code>List</code> of <code>MemoryPoolMXBean</code>.
+     * Gets the {@link List} of {@link MemoryPoolMXBean}.
      *
-     * @return A <code>List</code> of <code>MemoryPoolMXBean</code>.
+     * @return A {@link List} of {@link MemoryPoolMXBean}.
      */
     List<MemoryPoolMXBean> getMemoryPoolMXBeans();
 
     /**
-     * Gets the <code>ThreadMXBean</code>.
+     * Gets the {@link ThreadMXBean}.
      *
-     * @return An instance of <code>ThreadMXBean</code>.
+     * @return An instance of {@link ThreadMXBean}.
      */
     ThreadMXBean getThreadMXBean();
 
     /**
-     * Gets the <code>List</code> of <code>BufferPoolMXBean</code>.
+     * Gets the {@link List} of {@link BufferPoolMXBean}.
      *
-     * @return A <code>List</code> of <code>BufferPoolMXBean</code>.
+     * @return A {@link List} of {@link BufferPoolMXBean}.
      */
     List<BufferPoolMXBean> getBufferPoolMXBeans();
 
     /**
-     * Gets the <code>OperatingSystemMXBean</code>.
+     * Gets the {@link OperatingSystemMXBean}.
      *
-     * @return An instance of <code>OperatingSystemMXBean</code>.
+     * @return An instance of {@link OperatingSystemMXBean}.
      */
     OperatingSystemMXBean getOperatingSystemMXBean();
 }

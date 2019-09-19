@@ -27,7 +27,7 @@ import java.lang.management.ThreadMXBean;
 import java.util.List;
 
 /**
- * Tests <code>ManagementFactoryDefault</code> class.
+ * Tests {@link ManagementFactoryDefault} class.
  *
  * @author Deepika Misra (deepika at groupon dot com)
  */

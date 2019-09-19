@@ -16,7 +16,6 @@
 package com.arpnetworking.metrics.jvm.collectors;
 
 import com.arpnetworking.metrics.Metrics;
-import com.arpnetworking.metrics.Units;
 import com.arpnetworking.metrics.jvm.ManagementFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -30,7 +29,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * Tests <code>MemoryMetricsCollector</code> class.
+ * Tests {@link MemoryMetricsCollector} class.
  *
  * @author Deepika Misra (deepika at groupon dot com)
  */
@@ -66,8 +65,8 @@ public final class PoolMemoryMetricsCollectorTest {
         createMockBean(_memoryPoolMXBean1, "My Bean 1", 10L, 100L, MemoryType.NON_HEAP);
         Mockito.doReturn(Collections.singletonList(_memoryPoolMXBean1)).when(_managementFactory).getMemoryPoolMXBeans();
         PoolMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
-        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/used", 10L, Units.BYTE);
-        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/max", 100L, Units.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/used", 10L);
+        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/max", 100L);
     }
 
     @Test
@@ -79,12 +78,12 @@ public final class PoolMemoryMetricsCollectorTest {
                 .when(_managementFactory)
                 .getMemoryPoolMXBeans();
         PoolMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
-        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/used", 10L, Units.BYTE);
-        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/max", 100L, Units.BYTE);
-        Mockito.verify(_metrics).setGauge("jvm/heap_memory/my_bean_2/used", 20L, Units.BYTE);
-        Mockito.verify(_metrics).setGauge("jvm/heap_memory/my_bean_2/max", 300L, Units.BYTE);
-        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_3/used", 30L, Units.BYTE);
-        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_3/max", 400L, Units.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/used", 10L);
+        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/max", 100L);
+        Mockito.verify(_metrics).setGauge("jvm/heap_memory/my_bean_2/used", 20L);
+        Mockito.verify(_metrics).setGauge("jvm/heap_memory/my_bean_2/max", 300L);
+        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_3/used", 30L);
+        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_3/max", 400L);
         Mockito.verifyNoMoreInteractions(_metrics);
     }
 
@@ -131,9 +130,9 @@ public final class PoolMemoryMetricsCollectorTest {
         createMockBean(_memoryPoolMXBean1, "My Bean 1", 10L, -1, MemoryType.NON_HEAP);
         Mockito.doReturn(Collections.singletonList(_memoryPoolMXBean1)).when(_managementFactory).getMemoryPoolMXBeans();
         PoolMemoryMetricsCollector.newInstance().collect(_metrics, _managementFactory);
-        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/used", 10L, Units.BYTE);
+        Mockito.verify(_metrics).setGauge("jvm/non_heap_memory/my_bean_1/used", 10L);
         Mockito.verify(_metrics, Mockito.never())
-                .setGauge(Mockito.eq("jvm/non_heap_memory/my_bean_1/max"), Mockito.anyLong(), Mockito.eq(Units.BYTE));
+                .setGauge(Mockito.eq("jvm/non_heap_memory/my_bean_1/max"), Mockito.anyLong());
     }
 
     private MemoryUsage createMockBean(

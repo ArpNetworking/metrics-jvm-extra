@@ -36,9 +36,9 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Tests the <code>ExecutorServiceMetricsRunnable</code> class.
+ * Tests the {@link ExecutorServiceMetricsRunnable} class.
  *
- * @author Ville Koskela (ville dot koskela at inscopemetrics dot com)
+ * @author Ville Koskela (ville dot koskela at inscopemetrics dot io)
  */
 @SuppressFBWarnings("NP_NONNULL_PARAM_VIOLATION")
 public final class ExecutorServiceMetricsRunnableTest {

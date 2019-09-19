@@ -28,10 +28,10 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * An implementation of <code>Runnable</code> that collects all metrics for
- * registered <code>ExecutorService</code> instances each time its run.
+ * An implementation of {@link Runnable} that collects all metrics for
+ * registered {@link ExecutorService} instances each time its run.
  *
- * @author Ville Koskela (ville dot koskela at inscopemetrics dot com)
+ * @author Ville Koskela (ville dot koskela at inscopemetrics dot io)
  */
 // CHECKSTYLE.OFF: FinalClass - Allow clients to inherit from this.
 public class ExecutorServiceMetricsRunnable extends AbstractMetricsRunnable {
@@ -53,7 +53,7 @@ public class ExecutorServiceMetricsRunnable extends AbstractMetricsRunnable {
     }
 
     /**
-     * Generate samples for a <code>ForkJoinPool</code>.
+     * Generate samples for a {@link ForkJoinPool}.
      *
      * Includes metrics for:
      * <ul>
@@ -64,9 +64,9 @@ public class ExecutorServiceMetricsRunnable extends AbstractMetricsRunnable {
      *     <li>thread_pool_size</li>
      * </ul>
      *
-     * @param metrics this unit of work's <code>Metrics</code> instance
+     * @param metrics this unit of work's {@link Metrics} instance
      * @param name the name of the executor service
-     * @param executorService the <code>ForkJoinPool</code> instance to sample
+     * @param executorService the {@link ForkJoinPool} instance to sample
      */
     protected void processForkJoinPool(
             final Metrics metrics,
@@ -110,7 +110,7 @@ public class ExecutorServiceMetricsRunnable extends AbstractMetricsRunnable {
     }
 
     /**
-     * Generate samples for a <code>ThreadPoolExecutor</code>.
+     * Generate samples for a {@link ThreadPoolExecutor}.
      *
      * Includes metrics for:
      * <ul>
@@ -121,9 +121,9 @@ public class ExecutorServiceMetricsRunnable extends AbstractMetricsRunnable {
      *     <li>thread_pool_size</li>
      * </ul>
      *
-     * @param metrics this unit of work's <code>Metrics</code> instance
+     * @param metrics this unit of work's {@link Metrics} instance
      * @param name the name of the executor service
-     * @param executorService the <code>ForkJoinPool</code> instance to sample
+     * @param executorService the {@link ForkJoinPool} instance to sample
      */
     protected void processThreadPoolExecutor(
             final Metrics metrics,
@@ -182,18 +182,18 @@ public class ExecutorServiceMetricsRunnable extends AbstractMetricsRunnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(JvmMetricsRunnable.class);
 
     /**
-     * Builder for <code>ExecutorServiceMetricsRunnable</code>.
+     * Builder for {@link ExecutorServiceMetricsRunnable}.
      *
-     * @author Ville Koskela (ville dot koskela at inscopemetrics dot com)
+     * @author Ville Koskela (ville dot koskela at inscopemetrics dot io)
      */
     // CHECKSTYLE.OFF: FinalClass - Allow clients to inherit from this.
     public static class Builder {
         // CHECKSTYLE.ON: FinalClass
 
         /**
-         * Builds an instance of <code>ExecutorServiceMetricsRunnable</code>.
+         * Builds an instance of {@link ExecutorServiceMetricsRunnable}.
          *
-         * @return An instance of <code>ExecutorServiceMetricsRunnable</code>.
+         * @return An instance of {@link ExecutorServiceMetricsRunnable}.
          */
         public ExecutorServiceMetricsRunnable build() {
             if (_metricsFactory == null) {
@@ -219,11 +219,11 @@ public class ExecutorServiceMetricsRunnable extends AbstractMetricsRunnable {
         }
 
         /**
-         * Set the <code>MetricsFactory</code> instance. Required. Cannot be
+         * Set the {@link MetricsFactory} instance. Required. Cannot be
          * null.
          *
-         * @param value The value for the <code>MetricsFactory</code> instance.
-         * @return This <code>Builder</code> instance.
+         * @param value The value for the {@link MetricsFactory} instance.
+         * @return This {@link Builder} instance.
          */
         public Builder setMetricsFactory(final MetricsFactory value) {
             _metricsFactory = value;
@@ -237,8 +237,8 @@ public class ExecutorServiceMetricsRunnable extends AbstractMetricsRunnable {
          * will be logged and swallowed false indicates it will be rethrown as
          * a {@code RuntimeException}.
          *
-         * @param value The value for the <code>Boolean</code> instance.
-         * @return This <code>Builder</code> instance.
+         * @param value The value for the {@link Boolean} instance.
+         * @return This {@link Builder} instance.
          */
         public Builder setSwallowException(final Boolean value) {
             _swallowException = value;
@@ -246,11 +246,11 @@ public class ExecutorServiceMetricsRunnable extends AbstractMetricsRunnable {
         }
 
         /**
-         * Set the <code>ExecutorService</code> instances by name. Optional.
-         * Defaults to an empty <code>Map</code>. Cannot be null.
+         * Set the {@link ExecutorService} instances by name. Optional.
+         * Defaults to an empty {@link Map}. Cannot be null.
          *
-         * @param value The <code>ExecutorService</code> instances by name.
-         * @return This <code>Builder</code> instance.
+         * @param value The {@link ExecutorService} instances by name.
+         * @return This {@link Builder} instance.
          */
         public Builder setExecutorServices(final Map<String, ExecutorService> value) {
             // CHECKSTYLE.OFF: IllegalInstantiation - No Guava here
