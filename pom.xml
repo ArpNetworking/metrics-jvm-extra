@@ -18,7 +18,7 @@
   <parent>
     <groupId>com.arpnetworking.build</groupId>
     <artifactId>arpnetworking-parent-pom</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.5</version>
     <relativePath />
   </parent>
 
@@ -76,13 +76,13 @@
 
   <properties>
     <!--Dependency versions-->
-    <arpnetworking.commons.version>1.18.1</arpnetworking.commons.version>
-    <junit.version>4.12</junit.version>
+    <arpnetworking.commons.version>1.18.3</arpnetworking.commons.version>
+    <junit.version>4.13</junit.version>
     <jsr305.version>3.0.2</jsr305.version>
-    <metrics.client.version>0.11.0</metrics.client.version>
+    <metrics.client.version>0.11.2-SNAPSHOT</metrics.client.version>
     <mockito.version>2.23.4</mockito.version>
-    <slf4j.version>1.7.25</slf4j.version>
-    <spotbugs.annotations.version>3.1.12</spotbugs.annotations.version>
+    <slf4j.version>1.7.30</slf4j.version>
+    <spotbugs.annotations.version>4.0.3</spotbugs.annotations.version>
 
     <!-- Code Coverage -->
     <jacoco.check.line.coverage>1.0</jacoco.check.line.coverage>
