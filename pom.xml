@@ -28,7 +28,7 @@
   <packaging>jar</packaging>
   <name>Jvm Extra</name>
   <description>Extension to metrics-java-client for collecting JVM metrics.</description>
-  <version>0.11.1-SNAPSHOT</version>
+  <version>0.11.2-SNAPSHOT</version>
 
   <licenses>
     <license>
@@ -79,7 +79,7 @@
     <arpnetworking.commons.version>1.18.3</arpnetworking.commons.version>
     <junit.version>4.13</junit.version>
     <jsr305.version>3.0.2</jsr305.version>
-    <metrics.client.version>0.11.2-SNAPSHOT</metrics.client.version>
+    <metrics.client.version>0.11.2</metrics.client.version>
     <mockito.version>2.23.4</mockito.version>
     <slf4j.version>1.7.30</slf4j.version>
     <spotbugs.annotations.version>4.0.3</spotbugs.annotations.version>
