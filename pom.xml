@@ -77,7 +77,7 @@
   <properties>
     <!--Dependency versions-->
     <arpnetworking.commons.version>1.18.3</arpnetworking.commons.version>
-    <junit.version>4.13</junit.version>
+    <junit.version>4.13.1</junit.version>
     <jsr305.version>3.0.2</jsr305.version>
     <metrics.client.version>0.11.2</metrics.client.version>
     <mockito.version>2.23.4</mockito.version>
