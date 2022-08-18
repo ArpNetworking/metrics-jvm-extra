@@ -17,6 +17,7 @@ package com.arpnetworking.metrics.jvm;
 
 import com.arpnetworking.metrics.Metrics;
 import com.arpnetworking.metrics.MetricsFactory;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -37,10 +38,16 @@ public final class AbstractMetricsRunnableTest {
     private Metrics _metrics;
     @Mock
     private Logger _logger;
+    private AutoCloseable _mocks;
 
     @Before
     public void startUp() {
-        MockitoAnnotations.initMocks(this);
+        _mocks = MockitoAnnotations.openMocks(this);
+    }
+
+    @After
+    public void after() throws Exception {
+        _mocks.close();
     }
 
     @Test

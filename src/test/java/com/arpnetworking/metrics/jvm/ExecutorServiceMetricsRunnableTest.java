@@ -18,6 +18,7 @@ package com.arpnetworking.metrics.jvm;
 import com.arpnetworking.metrics.Metrics;
 import com.arpnetworking.metrics.MetricsFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,10 +48,16 @@ public final class ExecutorServiceMetricsRunnableTest {
     private MetricsFactory _metricsFactory;
     @Mock
     private Metrics _metrics;
+    private AutoCloseable _mocks;
 
     @Before
     public void startUp() {
-        MockitoAnnotations.initMocks(this);
+        _mocks = MockitoAnnotations.openMocks(this);
+    }
+
+    @After
+    public void after() throws Exception {
+        _mocks.close();
     }
 
     @Test
@@ -69,8 +76,8 @@ public final class ExecutorServiceMetricsRunnableTest {
         final ArgumentCaptor<String> nameCaptor = ArgumentCaptor.forClass(String.class);
         final ArgumentCaptor<Long> valueCaptor = ArgumentCaptor.forClass(Long.class);
 
-        Mockito.verifyZeroInteractions(_metricsFactory);
-        Mockito.verifyZeroInteractions(_metrics);
+        Mockito.verifyNoInteractions(_metricsFactory);
+        Mockito.verifyNoInteractions(_metrics);
 
         Mockito.doReturn(_metrics).when(_metricsFactory).create();
 
@@ -112,8 +119,8 @@ public final class ExecutorServiceMetricsRunnableTest {
         final ArgumentCaptor<String> nameCaptor = ArgumentCaptor.forClass(String.class);
         final ArgumentCaptor<Long> valueCaptor = ArgumentCaptor.forClass(Long.class);
 
-        Mockito.verifyZeroInteractions(_metricsFactory);
-        Mockito.verifyZeroInteractions(_metrics);
+        Mockito.verifyNoInteractions(_metricsFactory);
+        Mockito.verifyNoInteractions(_metrics);
 
         Mockito.doReturn(_metrics).when(_metricsFactory).create();
 
