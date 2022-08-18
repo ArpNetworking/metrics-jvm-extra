@@ -157,12 +157,12 @@ public final class JvmMetricsRunnableTest {
                 .setCollectFileDescriptorMetrics(false)
                 .build();
         runnable.run();
-        Mockito.verifyZeroInteractions(_gcCollector);
-        Mockito.verifyZeroInteractions(_heapMemoryCollector);
-        Mockito.verifyZeroInteractions(_poolMemoryCollector);
-        Mockito.verifyZeroInteractions(_threadCollector);
-        Mockito.verifyZeroInteractions(_bufferPoolCollector);
-        Mockito.verifyZeroInteractions(_fileDescriptorCollector);
+        Mockito.verifyNoInteractions(_gcCollector);
+        Mockito.verifyNoInteractions(_heapMemoryCollector);
+        Mockito.verifyNoInteractions(_poolMemoryCollector);
+        Mockito.verifyNoInteractions(_threadCollector);
+        Mockito.verifyNoInteractions(_bufferPoolCollector);
+        Mockito.verifyNoInteractions(_fileDescriptorCollector);
     }
 
     @Test
@@ -176,11 +176,11 @@ public final class JvmMetricsRunnableTest {
                 .build();
         runnable.run();
         Mockito.verify(_gcCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
-        Mockito.verifyZeroInteractions(_heapMemoryCollector);
-        Mockito.verifyZeroInteractions(_poolMemoryCollector);
-        Mockito.verifyZeroInteractions(_threadCollector);
-        Mockito.verifyZeroInteractions(_bufferPoolCollector);
-        Mockito.verifyZeroInteractions(_fileDescriptorCollector);
+        Mockito.verifyNoInteractions(_heapMemoryCollector);
+        Mockito.verifyNoInteractions(_poolMemoryCollector);
+        Mockito.verifyNoInteractions(_threadCollector);
+        Mockito.verifyNoInteractions(_bufferPoolCollector);
+        Mockito.verifyNoInteractions(_fileDescriptorCollector);
     }
 
     @Test
@@ -193,12 +193,12 @@ public final class JvmMetricsRunnableTest {
                 .setCollectFileDescriptorMetrics(false)
                 .build();
         runnable.run();
-        Mockito.verifyZeroInteractions(_gcCollector);
+        Mockito.verifyNoInteractions(_gcCollector);
         Mockito.verify(_heapMemoryCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
-        Mockito.verifyZeroInteractions(_poolMemoryCollector);
-        Mockito.verifyZeroInteractions(_threadCollector);
-        Mockito.verifyZeroInteractions(_bufferPoolCollector);
-        Mockito.verifyZeroInteractions(_fileDescriptorCollector);
+        Mockito.verifyNoInteractions(_poolMemoryCollector);
+        Mockito.verifyNoInteractions(_threadCollector);
+        Mockito.verifyNoInteractions(_bufferPoolCollector);
+        Mockito.verifyNoInteractions(_fileDescriptorCollector);
     }
 
     @Test
@@ -212,12 +212,12 @@ public final class JvmMetricsRunnableTest {
                 .setCollectFileDescriptorMetrics(false)
                 .build();
         runnable.run();
-        Mockito.verifyZeroInteractions(_gcCollector);
-        Mockito.verifyZeroInteractions(_heapMemoryCollector);
+        Mockito.verifyNoInteractions(_gcCollector);
+        Mockito.verifyNoInteractions(_heapMemoryCollector);
         Mockito.verify(_poolMemoryCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
-        Mockito.verifyZeroInteractions(_threadCollector);
-        Mockito.verifyZeroInteractions(_bufferPoolCollector);
-        Mockito.verifyZeroInteractions(_fileDescriptorCollector);
+        Mockito.verifyNoInteractions(_threadCollector);
+        Mockito.verifyNoInteractions(_bufferPoolCollector);
+        Mockito.verifyNoInteractions(_fileDescriptorCollector);
     }
 
     @Test
@@ -230,12 +230,12 @@ public final class JvmMetricsRunnableTest {
                 .setCollectFileDescriptorMetrics(false)
                 .build();
         runnable.run();
-        Mockito.verifyZeroInteractions(_gcCollector);
-        Mockito.verifyZeroInteractions(_heapMemoryCollector);
-        Mockito.verifyZeroInteractions(_poolMemoryCollector);
+        Mockito.verifyNoInteractions(_gcCollector);
+        Mockito.verifyNoInteractions(_heapMemoryCollector);
+        Mockito.verifyNoInteractions(_poolMemoryCollector);
         Mockito.verify(_threadCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
-        Mockito.verifyZeroInteractions(_bufferPoolCollector);
-        Mockito.verifyZeroInteractions(_fileDescriptorCollector);
+        Mockito.verifyNoInteractions(_bufferPoolCollector);
+        Mockito.verifyNoInteractions(_fileDescriptorCollector);
     }
 
     @Test
@@ -248,12 +248,12 @@ public final class JvmMetricsRunnableTest {
                 .setCollectFileDescriptorMetrics(false)
                 .build();
         runnable.run();
-        Mockito.verifyZeroInteractions(_gcCollector);
-        Mockito.verifyZeroInteractions(_heapMemoryCollector);
-        Mockito.verifyZeroInteractions(_poolMemoryCollector);
-        Mockito.verifyZeroInteractions(_threadCollector);
+        Mockito.verifyNoInteractions(_gcCollector);
+        Mockito.verifyNoInteractions(_heapMemoryCollector);
+        Mockito.verifyNoInteractions(_poolMemoryCollector);
+        Mockito.verifyNoInteractions(_threadCollector);
         Mockito.verify(_bufferPoolCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
-        Mockito.verifyZeroInteractions(_fileDescriptorCollector);
+        Mockito.verifyNoInteractions(_fileDescriptorCollector);
     }
 
     @Test
@@ -266,11 +266,11 @@ public final class JvmMetricsRunnableTest {
                 .setCollectBufferPoolMetrics(false)
                 .build();
         runnable.run();
-        Mockito.verifyZeroInteractions(_gcCollector);
-        Mockito.verifyZeroInteractions(_heapMemoryCollector);
-        Mockito.verifyZeroInteractions(_poolMemoryCollector);
-        Mockito.verifyZeroInteractions(_threadCollector);
-        Mockito.verifyZeroInteractions(_bufferPoolCollector);
+        Mockito.verifyNoInteractions(_gcCollector);
+        Mockito.verifyNoInteractions(_heapMemoryCollector);
+        Mockito.verifyNoInteractions(_poolMemoryCollector);
+        Mockito.verifyNoInteractions(_threadCollector);
+        Mockito.verifyNoInteractions(_bufferPoolCollector);
         Mockito.verify(_fileDescriptorCollector).collect(Mockito.any(Metrics.class), Mockito.any(ManagementFactory.class));
     }
 

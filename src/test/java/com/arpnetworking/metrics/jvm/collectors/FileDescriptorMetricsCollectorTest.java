@@ -52,7 +52,7 @@ public final class FileDescriptorMetricsCollectorTest {
         final OperatingSystemMXBean osBean = Mockito.mock(OperatingSystemMXBean.class);
         Mockito.doReturn(osBean).when(_managementFactory).getOperatingSystemMXBean();
         FileDescriptorMetricsCollector.newInstance().collect(_metrics, _managementFactory);
-        Mockito.verifyZeroInteractions(_metrics);
+        Mockito.verifyNoInteractions(_metrics);
     }
 
     @Test
