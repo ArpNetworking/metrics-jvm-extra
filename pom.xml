@@ -76,7 +76,7 @@
 
   <properties>
     <!--Dependency versions-->
-    <arpnetworking.commons.version>2.0.5</arpnetworking.commons.version>
+    <arpnetworking.commons.version>3.1.0</arpnetworking.commons.version>
     <junit.version>4.13.2</junit.version>
     <jsr305.version>3.0.2</jsr305.version>
     <metrics.client.version>0.12.1</metrics.client.version>
