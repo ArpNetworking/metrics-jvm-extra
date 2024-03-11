@@ -5,10 +5,7 @@ Jvm Extra
     <img src="https://img.shields.io/hexpm/l/plug.svg"
          alt="License: Apache 2">
 </a>
-<a href="https://travis-ci.org/ArpNetworking/metrics-jvm-extra/">
-    <img src="https://travis-ci.org/ArpNetworking/metrics-jvm-extra.png?branch=master"
-         alt="Travis Build">
-</a>
+[![Build Status](https://build.arpnetworking.com/buildStatus/icon?job=ArpNetworking%2Fmetrics-jvm-extra%2Fmaster)](https://build.arpnetworking.com/job/ArpNetworking/job/metrics-jvm-extra/job/master/)
 <a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.arpnetworking.metrics.extras%22%20a%3A%22jvm-extra%22">
     <img src="https://img.shields.io/maven-central/v/com.arpnetworking.metrics.extras/jvm-extra.svg"
          alt="Maven Artifact">
