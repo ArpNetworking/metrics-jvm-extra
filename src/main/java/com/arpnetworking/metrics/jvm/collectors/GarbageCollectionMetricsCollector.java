@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Collector class for JVM garbage collection metrics. Uses the Java Management API to get the metrics data.
@@ -87,6 +88,19 @@ public class GarbageCollectionMetricsCollector implements JvmMetricsCollector {
                         collectionTime
                 );
             }
+            final Optional<Long> collectionTimeDelta = getAndUpdateCollectionTimeDelta(beanName, currentCollectionCount);
+            if (collectionTimeDelta.isPresent()) {
+                metrics.setTimer(
+                        String.join(
+                                "/",
+                                ROOT_NAMESPACE,
+                                GARBAGE_COLLECTOR,
+                                MetricsUtil.convertToSnakeCase(beanName),
+                                COLLECTION_TIME_DELTA),
+                        collectionTimeDelta.get(),
+                        TimeUnit.MILLISECONDS
+                );
+            }
         }
     }
 
@@ -101,17 +115,30 @@ public class GarbageCollectionMetricsCollector implements JvmMetricsCollector {
         return Optional.of(currentValue - lastValue);
     }
 
+    private Optional<Long> getAndUpdateCollectionTimeDelta(final String beanName, final long currentValue) {
+        final long lastValue = _lastCollectionTimeMap.getOrDefault(beanName, -1L);
+        _lastCollectionTimeMap.put(beanName, currentValue);
+        //-1 signifies undefined.
+        //If there is no previous value or the previous value is -1 or the current value is -1, return Optional.empty().
+        if (lastValue == -1 || currentValue == -1) {
+            return Optional.empty();
+        }
+        return Optional.of(currentValue - lastValue);
+    }
+
     /**
      * Protected constructor.
      */
     protected GarbageCollectionMetricsCollector() {}
 
     // CHECKSTYLE.OFF: IllegalInstantiation - Needed, since we dont use Guava
-    private Map<String, Long> _lastCollectionCountMap = new HashMap<>();
+    private final Map<String, Long> _lastCollectionCountMap = new HashMap<>();
+    private final Map<String, Long> _lastCollectionTimeMap = new HashMap<>();
     // CHECKSTYLE.ON: IllegalInstantiation
 
     private static final String COLLECTION_COUNT = "collection_count";
     private static final String COLLECTION_TIME = "collection_time";
     private static final String COLLECTION_COUNT_DELTA = "collection_count_delta";
+    private static final String COLLECTION_TIME_DELTA = "collection_time_delta";
     private static final String GARBAGE_COLLECTOR = "garbage_collector";
 }
